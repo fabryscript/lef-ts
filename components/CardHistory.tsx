@@ -7,7 +7,7 @@ import { Button, Card, Title, Paragraph } from "react-native-paper";
 interface CardHistoryProps {
   text?: string;
   btntext?: string;
-  btfn?: () => {nomeLocale: string, indirizzo: string};
+  btfn?: (payload: {nomeLocale: string; indirizzo: string}) => void;
   paragraph?: string;
   indirizzo?: string;
 }
@@ -28,8 +28,11 @@ export const CardHistory: React.FC<CardHistoryProps> = ({
           <Paragraph>{indirizzo}</Paragraph>
         </Card.Content>
         <Card.Actions>
-            <Button mode="contained" onPress={btfn({nomeLocale: paragraph, indirizzo})}>{btntext}</Button>
-            /**FIXME */
+            <Button mode="contained" onPress={() => {
+              if (btfn && paragraph && indirizzo) {
+                btfn({nomeLocale: paragraph, indirizzo});
+              }
+            }}>{btntext}</Button>
         </Card.Actions>
       </Card>
     </View>
