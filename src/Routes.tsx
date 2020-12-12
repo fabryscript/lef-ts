@@ -1,53 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  createStackNavigator,
-  StackNavigationProp,
-} from "@react-navigation/stack";
-import { NavigationContainer, RouteProp } from "@react-navigation/native";
-import { ActivityIndicator, Button, Text } from "react-native-paper";
+
+import { NavigationContainer } from "@react-navigation/native";
+import { ActivityIndicator } from "react-native-paper";
 import { Center } from "./Center";
-import { AuthNavProps, AuthParamList } from "./AuthParamList";
 import AsyncStorage from "@react-native-community/async-storage";
 import { AuthContext } from "./AuthProvider";
 import { AppTabs } from "./AppTabs";
+import { AuthStack } from "./AuthStack";
 
 interface RoutesProps {}
-
-const Stack = createStackNavigator<AuthParamList>();
-
-function Login({ navigation, route }: AuthNavProps<"Login">) {
-    const { login } = useContext(AuthContext)
-    return (
-    <Center>
-      <Text>Io sono la Login</Text>
-      <Button
-        mode="contained"
-        onPress={() => {
-          navigation.navigate("Register");
-        }}
-      >
-        Vai a Registrazione
-      </Button>
-
-      <Button
-        mode="contained"
-        onPress={() => {
-            login();
-        }}
-      >
-        Entra nell'app
-      </Button>
-    </Center>
-  );
-}
-
-function Register({ navigation }: AuthNavProps<"Register">) {
-  return (
-    <Center>
-      <Text>Io sono la pagina di Registrazione</Text>
-    </Center>
-  );
-}
 
 export const Routes: React.FC<RoutesProps> = ({}) => {
   const { user, login } = useContext(AuthContext);
@@ -58,9 +19,9 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
     AsyncStorage.getItem("user")
       .then((userString) => {
         if (userString) {
-          login()
+          login();
         }
-          setLoading(false);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -77,14 +38,7 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
 
   return (
     <NavigationContainer>
-      {user ? (
-        <AppTabs />
-      ) : (
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
-        </Stack.Navigator>
-      )}
+      {user ? <AppTabs /> : <AuthStack />}
     </NavigationContainer>
   );
 };

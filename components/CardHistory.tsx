@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { Button, Card, Title, Paragraph } from "react-native-paper";
+import { Button, Card, Title, Paragraph, Text } from "react-native-paper";
 
 // text, btntext, btfn, paragraph, indirizzo
 
@@ -23,16 +23,16 @@ export const CardHistory: React.FC<CardHistoryProps> = ({
     <View>
       <Card>
         <Card.Content>
-          <Title>{text}</Title>
-          <Paragraph>{paragraph}</Paragraph>
-          <Paragraph>{indirizzo}</Paragraph>
+          <Title><Text>{text}</Text></Title>
+          <Paragraph><Text>{paragraph}</Text></Paragraph>
+          <Paragraph><Text>{indirizzo}</Text></Paragraph>
         </Card.Content>
         <Card.Actions>
-            <Button mode="contained" onPress={() => {
+            <Button mode="outlined" onPress={() => {
               if (btfn && paragraph && indirizzo) {
                 btfn({nomeLocale: paragraph, indirizzo});
               }
-            }}>{btntext}</Button>
+            }}><Text>{btntext}</Text></Button>
         </Card.Actions>
       </Card>
     </View>
