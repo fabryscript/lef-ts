@@ -5,14 +5,29 @@ export type ClassicoParamList = {
     Classico: undefined,
     Ristorante: {
         name?: string,
-        piatti?: [
-            one?: string,
-            two?: string,
-            three?: string,
-            four?: string
-        ]
+        piatti?: {
+            one?: {
+                nameP?:string,
+                price: number
+            },
+            two?: {
+                nameP?:string,
+                price: number
+            },
+            three?: {
+                nameP?:string,
+                price: number
+            },
+            four?: {
+                nameP?:string,
+                price: number
+            },
+        }
     },
-    Ordine: undefined
+    Ordine: {
+        allPiatti?: string,
+
+    }
 }
 
 export type ClassicoNavProps<T extends keyof ClassicoParamList> = { 

@@ -47,11 +47,20 @@ function Classico({ navigation }: ClassicoNavProps<"Classico">) {
         btfn={() =>
           navigation.navigate("Ristorante", {
             name: "Dumbolone Pizzeria",
-            piatti: [
-              "\n€6.50 Pizza Margherita\n",
-              "€0.70 Caffè Espresso\n",
-              "€5.40 Insalata Maxi\n",
-            ],
+            piatti: {
+              one:{
+                nameP: "Pizza Margherita con Bufala di Caserta D.O.P",
+                price: 7.10 
+              },
+              two:{
+                nameP: "Insalatona Maxi con Pomodori, Radicchio, Mais e Lattuga verde",
+                price: 5.50
+              },
+              three:{
+                nameP: "Caffè espresso Borbone",
+                price: 0.70
+              }
+            }
           })
         }
       />
@@ -63,11 +72,16 @@ function Classico({ navigation }: ClassicoNavProps<"Classico">) {
         btfn={() =>
           navigation.navigate("Ristorante", {
             name: "MA sushi & locanda di mare Milazzo",
-            piatti: [
-              "\n€8.50 Onigiri Small 18pz\n",
-              "€15.40 Sashimi 20pz\n",
-              "€0.70 Caffè Espresso\n",
-            ],
+            piatti: {
+              one:{
+                nameP: "Onigiri 18pz",
+                price: 12.90 
+              },
+              two:{
+                nameP: "Sashimi 12pz",
+                price: 9.00
+              }
+            }
           })
         }
       />
@@ -104,7 +118,9 @@ function Ristorante({ route, navigation }: ClassicoNavProps<"Ristorante">) {
               {
                 icon: "plus",
                 label: "Nuovo ordine da questo ristorante",
-                onPress: () => navigation.navigate('Ordine'),
+                onPress: () => navigation.navigate('Ordine', {
+
+                }),
               },
             ]}
             onStateChange={onStateChange}
