@@ -2,8 +2,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { useState } from "react";
 import { View } from "react-native";
 import { Searchbar, Card, Title, Paragraph } from "react-native-paper";
-import { Provider } from "react-native-paper";
 import { RestaurantCard } from "../components/RestaurantCard";
+const Ngonia = require('../assets/ngonia.jpg')
 
 interface VeganoStackProps {}
 
@@ -13,7 +13,6 @@ function Vegano() {
   const onChangeSearch = (query: React.SetStateAction<string>) =>
     setSearchQuery(query);
   return (
-    <Provider>
       <View>
         <Searchbar
           placeholder="Cerca ristorante vicino a te"
@@ -33,12 +32,9 @@ function Vegano() {
           indirizzo="Piazza Angonia, 98057 Milazzo ME"
           orario="19:30-23:00"
           btntext="esplora"
-          btfn={() =>
-            console.log("we bellissimo")
-          } /**Ovviamente qui ci va la navigationxD */
+          imageName={Ngonia}
         />
       </View>
-    </Provider>
   );
 }
 

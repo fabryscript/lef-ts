@@ -4,6 +4,7 @@ import { View } from "react-native";
 import { Searchbar, Card, Title, Paragraph } from "react-native-paper";
 import { Provider } from "react-native-paper";
 import { RestaurantCard } from "../components/RestaurantCard";
+const Degus = require('../assets/degus.jpg')
 
 interface VegetarianoStackProps {}
 
@@ -13,7 +14,6 @@ function Vegetariano() {
   const onChangeSearch = (query: React.SetStateAction<string>) =>
     setSearchQuery(query);
   return (
-    <Provider>
       <View>
         <Searchbar
           placeholder="Cerca ristorante vicino a te"
@@ -33,12 +33,9 @@ function Vegetariano() {
           indirizzo="Via Montecastro, 69, 98057 Milazzo ME"
           orario="16:15-19:30"
           btntext="esplora"
-          btfn={() =>
-            console.log("we bellissimo")
-          } /**Ovviamente qui ci va la navigationxD */
+          imageName={Degus}
         />
       </View>
-    </Provider>
   );
 }
 

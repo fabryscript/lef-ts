@@ -1,15 +1,13 @@
 import React from "react";
 import { View } from "react-native";
 import { Button, Card, Title, Paragraph } from "react-native-paper";
-
-// image, text, btntext, btfn, indirizzo, orario
-
 interface RestaurantCardProps {
   text?: string;
   btntext?: string;
   btfn?: () => void;
   indirizzo?: string;
   orario?: string;
+  imageName?: any
 }
 
 export const RestaurantCard: React.FC<RestaurantCardProps> = ({
@@ -18,10 +16,12 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
   btfn,
   indirizzo,
   orario,
+  imageName
 }) => {
   return (
     <View>
       <Card>
+        <Card.Cover source={imageName} />
         <Card.Content>
           <Title>{text}</Title>
           <Paragraph>{indirizzo}</Paragraph>

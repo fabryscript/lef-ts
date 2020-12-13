@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useState } from "react";
-import { View } from "react-native";
+import { ScrollView } from "react-native";
 import { Portal } from "react-native-paper";
 import { Provider, Text, Modal } from "react-native-paper";
 import { CardHistory } from "../components/CardHistory";
@@ -25,8 +25,7 @@ function OrdiniRecenti() {
   const containerStyle = { backgroundColor: "black", padding: 20 };
 
   return (
-    <Provider>
-      <View style={{ width: "100%" }}>
+      <ScrollView style={{ width: "100%" }}>
         <CardHistory
           text="Ordine #0001"
           paragraph="Pizzeria 'Verace Elettrica'"
@@ -55,6 +54,7 @@ function OrdiniRecenti() {
           btntext="Visualizza dettagli ordine"
           btfn={showModal}
         />
+        <Provider>
         <Portal>
           <Modal
             visible={visible}
@@ -76,8 +76,8 @@ function OrdiniRecenti() {
             </Text>
           </Modal>
         </Portal>
-      </View>
-    </Provider>
+        </Provider>
+      </ScrollView>
   );
 }
 

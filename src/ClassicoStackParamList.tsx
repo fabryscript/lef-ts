@@ -1,24 +1,19 @@
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { plate } from "./models";
 
 export type ClassicoParamList = {
     Classico: undefined,
     Ristorante: {
         name?: string,
-        piatti?: [
-            one?: string,
-            two?: string,
-            three?: string
-        ]
-    }
+        piatti?: plate[],
+    },
     Ordine: {
         name?: string,
-        allPiatti?: [
-            one?: string,
-            two?: string,
-            three?: string
-        ]
-    }
+        allPiatti?: plate[],
+    },
+    Ricevuto: undefined
+
 }
 
 export type ClassicoNavProps<T extends keyof ClassicoParamList> = { 

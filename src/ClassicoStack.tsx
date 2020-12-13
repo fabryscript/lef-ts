@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { View } from "react-native";
-import {useForm} from "react-hook-form";
+import { View, ScrollView, Image } from "react-native";
+import { useForm } from "react-hook-form";
 import {
   Searchbar,
   Card,
@@ -11,14 +11,20 @@ import {
   FAB,
   Provider,
   Portal,
-  Checkbox,
   Switch,
+  Button,
+  Modal,
 } from "react-native-paper";
 import { RestaurantCard } from "../components/RestaurantCard";
 import { ClassicoNavProps, ClassicoParamList } from "./ClassicoStackParamList";
-import { Value } from "react-native-reanimated";
+import Db from "./dbex.json";
+import { plate } from "./models/plate";
+const Dumbo = require('../assets/dumbolone.jpg')
+const MA = require('../assets/masushi.jpg')
 
 interface ClassicoStackProps {}
+
+let db = Db;
 
 const Stack = createStackNavigator<ClassicoParamList>();
 
@@ -29,7 +35,7 @@ function Classico({ navigation }: ClassicoNavProps<"Classico">) {
     setSearchQuery(query);
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1 }}>
       <Searchbar
         placeholder="Cerca ristorante vicino a te"
         onChangeText={onChangeSearch}
@@ -51,13 +57,10 @@ function Classico({ navigation }: ClassicoNavProps<"Classico">) {
         btfn={() =>
           navigation.navigate("Ristorante", {
             name: "Dumbolone Pizzeria",
-            piatti: [
-              "\n\n€6.50 Pizza Capricciosa\n\n",
-              "€9.50 Calzone Speck, Radicchio e Mozzarella di Bufala D.O.P\n\n",
-              "€0.70 Caffè Espresso Borbone™\n\n",
-            ],
+            piatti: db.plates,
           })
         }
+        imageName={Dumbo}
       />
       <RestaurantCard
         text="MA sushi & locanda di mare Milazzo"
@@ -67,15 +70,12 @@ function Classico({ navigation }: ClassicoNavProps<"Classico">) {
         btfn={() =>
           navigation.navigate("Ristorante", {
             name: "MA sushi & locanda di mare Milazzo",
-            piatti: [
-              "\n\n€12.50 Onigiri 12pz\n\n",
-              "€9.00 Osōmaki 10pz\n\n",
-              "€13/L Sake Originale\n\n",
-            ],
+            piatti: db.plates,
           })
         }
+        imageName={MA}
       />
-    </View>
+    </ScrollView>
   );
 }
 
@@ -84,15 +84,19 @@ function Ristorante({ route, navigation }: ClassicoNavProps<"Ristorante">) {
   const onStateChange = ({ open }: { open: any }) => setState({ open });
 
   const { open } = state;
+  let piatti: string[] = [];
+
+  if (route.params.piatti) {
+    piatti = route.params.piatti.map((el) => el.name);
+  }
+
   return (
     <Provider>
       <View>
         <Card>
           <Card.Content>
             <Title>Nome Ristorante: {route.params.name}</Title>
-            <Paragraph>
-              Piatti Disponibili nel Menù: {route.params.piatti}
-            </Paragraph>
+            <Paragraph>Piatti Disponibili nel Menù: {piatti}</Paragraph>
           </Card.Content>
         </Card>
 
@@ -124,46 +128,159 @@ function Ristorante({ route, navigation }: ClassicoNavProps<"Ristorante">) {
     </Provider>
   );
 }
+{
+  /**Array,  */
+}
+function Ordine({ route, navigation }: ClassicoNavProps<"Ordine">) {
+  const allPiatti = route.params.allPiatti;
+  const [shown, setShown] = useState(false);
+  let plates: {} | null | undefined = [];
+  const hideModal = () => setShown(false);
 
-function Ordine({ route }: ClassicoNavProps<"Ordine">) {
-  const [isSwitchOn, setIsSwitchOn] = useState(false);
-  
-  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn)
+  if (allPiatti) {
+    const [isSwitchOn, setIsSwitchOn] = useState<any[]>(
+      allPiatti.map((piatto) => ({
+        value: false,
+        ...piatto,
+      }))
+    );
 
-  let plates = route.params.allPiatti?.map(element => (
-    <Card>
-      <Card.Content>
-        <Paragraph>
-          <Switch 
-            value={isSwitchOn}
-            onValueChange={onToggleSwitch}
-          />
-          {element}
-        </Paragraph>
-      </Card.Content>
-    </Card>
-  ));
-  
-  return (
-    <View>
-      <Card>
+    const onToggleSwitch = (
+      value: boolean,
+      piatto: plate | undefined,
+      index: number
+    ) => {
+      const temp = [...isSwitchOn];
+      temp.splice(index, 1, {
+        value,
+        ...piatto,
+      });
+      setIsSwitchOn(temp);
+    };
+
+    const checkedPlatesObj = isSwitchOn.filter((el: any) => el.value);
+
+    plates = allPiatti.map((element, index) => (
+      <Card key={index}>
         <Card.Content>
-          <Title>{route.params.name}</Title>
+          <Paragraph>
+            <Switch
+              value={isSwitchOn[index].value}
+              onValueChange={(value) => onToggleSwitch(value, element, index)}
+            />
+            €{element.price} - {element.name}
+            <Button
+              onPress={() => setShown(true)}
+              mode="outlined"
+              disabled={checkedPlatesObj.length === 0}
+            >
+              Mostra Macronutrienti
+            </Button>
+          </Paragraph>
         </Card.Content>
       </Card>
-      {plates} 
-    </View>
+    ));
+
+    let totale = 0;
+
+    const checkedPlates = checkedPlatesObj.map((el: any, index: number) => {
+      totale += el.price;
+
+      return (
+        <Card key={index}>
+          <Card.Content>
+            <Text>{el.name}</Text>
+          </Card.Content>
+        </Card>
+      );
+    });
+
+    const modalForMacros = checkedPlatesObj.map((el: any, index: number) => {
+      let calorie = el.macronut.calorie;
+      let proteine = el.macronut.proteine;
+      let carboidrati = el.macronut.carboidrati;
+      let grassi = el.macronut.grassi;
+
+      return (
+        <Card key={index}>
+          <Card.Content>
+            <Title>Valori nutrizionali su 100g del prodotto: {el.name}</Title>
+            <Paragraph>  </Paragraph>
+            <Paragraph>Calorie: {calorie} kCal</Paragraph>
+            <Paragraph>Proteine: {proteine} g</Paragraph>
+            <Paragraph>Carboidrati: {carboidrati} g</Paragraph>
+            <Paragraph>Grassi: {grassi} g</Paragraph>
+          </Card.Content>
+        </Card>
+      );
+      {/**EUREKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA */}
+    });
+
+    return (
+      <ScrollView>
+        <Card>
+          <Card.Content>
+            <Title>
+              Piatti Disponibili per il ristorante: {route.params.name}
+            </Title>
+          </Card.Content>
+        </Card>
+        {plates}
+        <Card>
+          <Card.Content>
+            <Title>Riepilogo Ordine</Title>
+          </Card.Content>
+        </Card>
+        {checkedPlates}
+        <Card>
+          <Card.Content>
+            <Title>Totale: €{totale}</Title>
+            <Button
+              disabled={checkedPlates.length === 0}
+              mode="outlined"
+              onPress={() => navigation.navigate('Ricevuto')}
+            >
+              Conferma Ordine
+            </Button>
+          </Card.Content>
+        </Card>
+        <Provider>
+          <Portal>
+            <Modal visible={shown} onDismiss={hideModal}>
+              {modalForMacros}
+            </Modal>
+          </Portal>
+        </Provider>
+      </ScrollView>
+    );
+  }
+  return (
+    <Card>
+      <Card.Content>Qui non c'è nulla :(</Card.Content>
+    </Card>
   );
 }
-{/**bruh why this worked tho? map() magic? */
-/**comunque, ogni switch deve avere il suo state e poi fare un submit di massa */
+
+function OrderRecieved(){
+  return(
+    <ScrollView style={{flex: 1, alignContent: "center"}}>
+      <Card>
+        <Card.Content>
+          <Title>✔Il tuo ordine è stato ricevuto con successo!
+          Grazie!💗</Title>
+        </Card.Content>
+      </Card>
+    </ScrollView>
+  )
 }
+
 export const ClassicoStack: React.FC<ClassicoStackProps> = ({}) => {
   return (
     <Stack.Navigator initialRouteName="Classico">
       <Stack.Screen name="Classico" component={Classico} />
       <Stack.Screen name="Ristorante" component={Ristorante} />
       <Stack.Screen name="Ordine" component={Ordine} />
+      <Stack.Screen name="Ricevuto" component={OrderRecieved} />
     </Stack.Navigator>
   );
 };
