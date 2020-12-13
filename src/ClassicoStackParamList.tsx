@@ -5,32 +5,25 @@ export type ClassicoParamList = {
     Classico: undefined,
     Ristorante: {
         name?: string,
-        piatti?: {
-            one?: {
-                nameP?:string,
-                price: number
-            },
-            two?: {
-                nameP?:string,
-                price: number
-            },
-            three?: {
-                nameP?:string,
-                price: number
-            },
-            four?: {
-                nameP?:string,
-                price: number
-            },
-        }
-    },
+        piatti?: [
+            one?: string,
+            two?: string,
+            three?: string
+        ]
+    }
     Ordine: {
-        allPiatti?: string,
-
+        name?: string,
+        allPiatti?: [
+            one?: string,
+            two?: string,
+            three?: string
+        ]
     }
 }
 
 export type ClassicoNavProps<T extends keyof ClassicoParamList> = { 
     navigation: StackNavigationProp<ClassicoParamList, T>;
     route: RouteProp<ClassicoParamList, T>
+    restaurantName: string
+    allPlates: []
 }

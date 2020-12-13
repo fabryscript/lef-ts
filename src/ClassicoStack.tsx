@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
+import {useForm} from "react-hook-form";
 import {
   Searchbar,
   Card,
@@ -10,9 +11,12 @@ import {
   FAB,
   Provider,
   Portal,
+  Checkbox,
+  Switch,
 } from "react-native-paper";
 import { RestaurantCard } from "../components/RestaurantCard";
 import { ClassicoNavProps, ClassicoParamList } from "./ClassicoStackParamList";
+import { Value } from "react-native-reanimated";
 
 interface ClassicoStackProps {}
 
@@ -47,20 +51,11 @@ function Classico({ navigation }: ClassicoNavProps<"Classico">) {
         btfn={() =>
           navigation.navigate("Ristorante", {
             name: "Dumbolone Pizzeria",
-            piatti: {
-              one:{
-                nameP: "Pizza Margherita con Bufala di Caserta D.O.P",
-                price: 7.10 
-              },
-              two:{
-                nameP: "Insalatona Maxi con Pomodori, Radicchio, Mais e Lattuga verde",
-                price: 5.50
-              },
-              three:{
-                nameP: "Caffè espresso Borbone",
-                price: 0.70
-              }
-            }
+            piatti: [
+              "\n\n€6.50 Pizza Capricciosa\n\n",
+              "€9.50 Calzone Speck, Radicchio e Mozzarella di Bufala D.O.P\n\n",
+              "€0.70 Caffè Espresso Borbone™\n\n",
+            ],
           })
         }
       />
@@ -72,16 +67,11 @@ function Classico({ navigation }: ClassicoNavProps<"Classico">) {
         btfn={() =>
           navigation.navigate("Ristorante", {
             name: "MA sushi & locanda di mare Milazzo",
-            piatti: {
-              one:{
-                nameP: "Onigiri 18pz",
-                price: 12.90 
-              },
-              two:{
-                nameP: "Sashimi 12pz",
-                price: 9.00
-              }
-            }
+            piatti: [
+              "\n\n€12.50 Onigiri 12pz\n\n",
+              "€9.00 Osōmaki 10pz\n\n",
+              "€13/L Sake Originale\n\n",
+            ],
           })
         }
       />
@@ -100,10 +90,12 @@ function Ristorante({ route, navigation }: ClassicoNavProps<"Ristorante">) {
         <Card>
           <Card.Content>
             <Title>Nome Ristorante: {route.params.name}</Title>
-            <Paragraph>Piatti Disponibili nel Menù: {route.params.piatti}</Paragraph>
+            <Paragraph>
+              Piatti Disponibili nel Menù: {route.params.piatti}
+            </Paragraph>
           </Card.Content>
         </Card>
-        
+
         <Portal>
           <FAB.Group
             visible={true}
@@ -113,18 +105,19 @@ function Ristorante({ route, navigation }: ClassicoNavProps<"Ristorante">) {
               {
                 icon: "star",
                 label: "Aggiungi ai Piatti Preferiti",
-                onPress: () => console.log("Pressed notifications"),
+                onPress: () => console.log("Devi aggiungere nei preferiti"),
               },
               {
                 icon: "plus",
                 label: "Nuovo ordine da questo ristorante",
-                onPress: () => navigation.navigate('Ordine', {
-
-                }),
+                onPress: () =>
+                  navigation.navigate("Ordine", {
+                    name: route.params.name,
+                    allPiatti: route.params.piatti,
+                  }),
               },
             ]}
             onStateChange={onStateChange}
-            
           />
         </Portal>
       </View>
@@ -132,14 +125,39 @@ function Ristorante({ route, navigation }: ClassicoNavProps<"Ristorante">) {
   );
 }
 
-function Ordine(){
-  return(
-    <View>
-      <Text>Ciao!</Text>
-    </View>
-  )
-}
+function Ordine({ route }: ClassicoNavProps<"Ordine">) {
+  const [isSwitchOn, setIsSwitchOn] = useState(false);
+  
+  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn)
 
+  let plates = route.params.allPiatti?.map(element => (
+    <Card>
+      <Card.Content>
+        <Paragraph>
+          <Switch 
+            value={isSwitchOn}
+            onValueChange={onToggleSwitch}
+          />
+          {element}
+        </Paragraph>
+      </Card.Content>
+    </Card>
+  ));
+  
+  return (
+    <View>
+      <Card>
+        <Card.Content>
+          <Title>{route.params.name}</Title>
+        </Card.Content>
+      </Card>
+      {plates} 
+    </View>
+  );
+}
+{/**bruh why this worked tho? map() magic? */
+/**comunque, ogni switch deve avere il suo state e poi fare un submit di massa */
+}
 export const ClassicoStack: React.FC<ClassicoStackProps> = ({}) => {
   return (
     <Stack.Navigator initialRouteName="Classico">
