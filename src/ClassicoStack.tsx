@@ -196,13 +196,21 @@ function Ordine({ route, navigation }: ClassicoNavProps<"Ordine">) {
     });
 
     let totaleCalorie = 0;
+    let totaleProteine = 0;
+    let totaleCarbodrati = 0;
+    let totaleGrassi = 0;
     
     const modalForMacros = checkedPlatesObj.map((el: any, index: number) => {
       let calorie = el.macronut.calorie;
       let proteine = el.macronut.proteine;
       let carboidrati = el.macronut.carboidrati;
       let grassi = el.macronut.grassi;
+      
       totaleCalorie += calorie 
+      totaleProteine += proteine
+      totaleCarbodrati += carboidrati
+      totaleGrassi += grassi
+
 
       return (
         <Card key={index}>
@@ -231,14 +239,19 @@ function Ordine({ route, navigation }: ClassicoNavProps<"Ordine">) {
         {plates}
         <Card>
           <Card.Content>
-            <Title>Riepilogo Ordine</Title>
+            <Title>Riepilogo Ordine:</Title>
           </Card.Content>
         </Card>
         {checkedPlates}
         <Card>
           <Card.Content>
             <Title>Totale: €{totale}</Title>
-            <Title>Totale Calorie: {totaleCalorie} kCal</Title>
+            <Title>Totale Calorie: {totaleCalorie} kCal su 2440 del tuo tetto giornaliero</Title>
+            <Card.Content>
+              <Text>Totale Proteine: {totaleProteine} g</Text>
+              <Text>Totale Carboidrati: {totaleCarbodrati} g</Text>
+              <Text>Totale Grassi: {totaleGrassi} g</Text>
+            </Card.Content>
             <Button
               disabled={checkedPlates.length === 0}
               mode="outlined"
