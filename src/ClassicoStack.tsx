@@ -195,11 +195,14 @@ function Ordine({ route, navigation }: ClassicoNavProps<"Ordine">) {
       );
     });
 
+    let totaleCalorie = 0;
+    
     const modalForMacros = checkedPlatesObj.map((el: any, index: number) => {
       let calorie = el.macronut.calorie;
       let proteine = el.macronut.proteine;
       let carboidrati = el.macronut.carboidrati;
       let grassi = el.macronut.grassi;
+      totaleCalorie += calorie 
 
       return (
         <Card key={index}>
@@ -235,6 +238,7 @@ function Ordine({ route, navigation }: ClassicoNavProps<"Ordine">) {
         <Card>
           <Card.Content>
             <Title>Totale: €{totale}</Title>
+            <Title>Totale Calorie: {totaleCalorie} kCal</Title>
             <Button
               disabled={checkedPlates.length === 0}
               mode="outlined"
