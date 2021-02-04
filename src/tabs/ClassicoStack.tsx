@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { View, ScrollView, Image } from "react-native";
-import { useForm } from "react-hook-form";
+import { View, ScrollView } from "react-native";
 import {
   Searchbar,
   Card,
@@ -16,9 +15,9 @@ import {
   Modal,
 } from "react-native-paper";
 import { RestaurantCard } from "../components/RestaurantCard";
-import { ClassicoNavProps, ClassicoParamList } from "./ClassicoStackParamList";
-import Db from "./dbex.json";
-import { plate } from "./models/plate";
+import { ClassicoNavProps, ClassicoParamList } from "../paramlists/ClassicoStackParamList";
+import Db from "../dbex.json";
+import { plate } from "../models/plate";
 const Dumbo = require('../assets/dumbolone.jpg')
 const MA = require('../assets/masushi.jpg')
 
@@ -128,9 +127,7 @@ function Ristorante({ route, navigation }: ClassicoNavProps<"Ristorante">) {
     </Provider>
   );
 }
-{
-  /**Array,  */
-}
+
 function Ordine({ route, navigation }: ClassicoNavProps<"Ordine">) {
   const allPiatti = route.params.allPiatti;
   const [shown, setShown] = useState(false);
@@ -199,14 +196,14 @@ function Ordine({ route, navigation }: ClassicoNavProps<"Ordine">) {
     let totaleProteine = 0;
     let totaleCarbodrati = 0;
     let totaleGrassi = 0;
-    
+
     const modalForMacros = checkedPlatesObj.map((el: any, index: number) => {
       let calorie = el.macronut.calorie;
       let proteine = el.macronut.proteine;
       let carboidrati = el.macronut.carboidrati;
       let grassi = el.macronut.grassi;
-      
-      totaleCalorie += calorie 
+
+      totaleCalorie += calorie
       totaleProteine += proteine
       totaleCarbodrati += carboidrati
       totaleGrassi += grassi
@@ -224,7 +221,6 @@ function Ordine({ route, navigation }: ClassicoNavProps<"Ordine">) {
           </Card.Content>
         </Card>
       );
-      {/**EUREKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA */}
     });
 
     return (

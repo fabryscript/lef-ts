@@ -2,7 +2,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { useState } from "react";
 import { View } from "react-native";
 import { Searchbar, Card, Title, Paragraph } from "react-native-paper";
-import { Provider } from "react-native-paper";
 import { RestaurantCard } from "../components/RestaurantCard";
 const Degus = require('../assets/degus.jpg')
 

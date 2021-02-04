@@ -1,44 +1,32 @@
-import React, { useContext, useEffect, useState } from "react";
-
-import { NavigationContainer } from "@react-navigation/native";
-import { ActivityIndicator } from "react-native-paper";
-import { Center } from "./Center";
-import AsyncStorage from "@react-native-community/async-storage";
-import { AuthContext } from "./AuthProvider";
+import React, { useContext } from "react";
+import {
+  NavigationContainer,
+  DarkTheme as NavigationDarkTheme,
+  DefaultTheme as NavigationDefaultTheme,
+} from "@react-navigation/native";
+import {
+  DarkTheme as PaperDarkTheme,
+  DefaultTheme as PaperDefaultTheme,
+  Provider as PaperProvider,
+} from "react-native-paper";
 import { AppTabs } from "./AppTabs";
-import { AuthStack } from "./AuthStack";
+import { AuthStack } from "./auth/AuthStack";
+import { UserContext } from "./UserProvider";
+import merge from "deepmerge";
 
 interface RoutesProps {}
 
-export const Routes: React.FC<RoutesProps> = ({}) => {
-  const { user, login } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
+// const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
+const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 
-  useEffect(() => {
-    //controlla se l'utente è registrato oppure no
-    AsyncStorage.getItem("user")
-      .then((userString) => {
-        if (userString) {
-          login();
-        }
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  if (loading) {
-    return (
-      <Center>
-        <ActivityIndicator animating={true} />
-      </Center>
-    );
-  }
+export const Routes: React.FC<RoutesProps> = () => {
+  const { actualUser } = useContext(UserContext);
 
   return (
-    <NavigationContainer>
-      {user ? <AppTabs /> : <AuthStack />}
-    </NavigationContainer>
+    <PaperProvider theme={CombinedDarkTheme}>
+      <NavigationContainer theme={CombinedDarkTheme}>
+        { actualUser && actualUser.emailVerified === true ? <AppTabs /> : <AuthStack /> }
+      </NavigationContainer>
+    </PaperProvider>
   );
 };

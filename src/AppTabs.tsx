@@ -1,12 +1,12 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AppParamList } from "./AppParamList";
+import { AppParamList } from "./paramlists/AppParamList";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
-import { ClassicoStack } from "./ClassicoStack";
-import { VegetarianoStack } from "./VegetarianoStack";
-import { VeganoStack } from "./VeganoStack";
-import { OrdiniRecentiStack } from "./OrdiniRecentiStack";
-import { ImpostazioniStack } from "./ImpostazioniStack";
+import { ClassicoStack } from "./tabs/ClassicoStack";
+import { VegetarianoStack } from "./tabs/VegetarianoStack";
+import { VeganoStack } from "./tabs/VeganoStack";
+import { OrdiniRecentiStack } from "./tabs/OrdiniRecentiStack";
+import { ImpostazioniStack } from "./tabs/ImpostazioniStack";
 
 interface AppTabsProps {}
 

@@ -69,7 +69,7 @@ function OrdiniRecenti() {
                 buttonFN={hideModal}
               ></DetailsCard>
 
-              {/* per dinamicizzare "importo" e "metodo": settare una variabile che reperisce quei dati dal futuro servizio dal quale farò una request 
+              {/* per dinamicizzare "importo" e "metodo": settare una variabile che reperisce quei dati dal futuro servizio dal quale farò una request
                   esempio: let importo = response.importo
                            let metodo = response.metodo
                 */}

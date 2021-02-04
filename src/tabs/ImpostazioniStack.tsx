@@ -7,20 +7,31 @@ import {
   Card,
   Paragraph,
 } from "react-native-paper";
-import { AuthContext } from "./AuthProvider";
+import PersonalData from "../additionalData/PersonalData";
+import Profilo from "../additionalData/Profilo";
+import TOS from "../additionalData/TOS";
+import { auth } from "../auth/firebase";
 import {
   ImpostazioniNavProps,
-} from "./ImpostazioniStackParamList";
+} from "../paramlists/ImpostazioniStackParamList";
 
 interface ImpostazioniStackProps {}
 
 function Impostazioni({ navigation }: ImpostazioniNavProps<"Impostazioni">) {
-  const { logout } = useContext(AuthContext);
   return (
     <View>
       <Title style={{ textAlign: "left" }}>Impostazioni</Title>
-      <Button mode="outlined" onPress={() => logout()}>
+      <Button mode="outlined" onPress={() => auth.signOut()}>
         Esegui il Logout
+      </Button>
+      <Button mode="outlined" onPress={() => navigation.navigate("Profilo")}>
+        Profilo
+      </Button>
+      <Button mode="outlined" onPress={() => navigation.navigate("Preferenze")}>
+        Preferenze Personali
+      </Button>
+      <Button mode="outlined" onPress={() => navigation.navigate("TOS")}>
+        Informativa sulla Privacy
       </Button>
       <Button mode="outlined" onPress={() => navigation.navigate("Info")}>
         Informazioni sull'Applicazione
@@ -61,6 +72,9 @@ export const ImpostazioniStack: React.FC<ImpostazioniStackProps> = ({}) => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Impostazioni" component={Impostazioni} />
+      <Stack.Screen name="Profilo" component={Profilo} />
+      <Stack.Screen name="Preferenze" component={PersonalData} />
+      <Stack.Screen name="TOS" component={TOS} />
       <Stack.Screen name="Info" component={Info} />
     </Stack.Navigator>
   );
