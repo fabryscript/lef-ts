@@ -1,0 +1,80 @@
+{
+  "restaurants": [
+    {
+      "name": "Dumbolone Pizzeria",
+      "address": "Via Risorgimento, 150, 98057 Milazzo ME",
+      "hourtime": "19:15-22:30",
+      "plates": [
+        {
+          "name": "\nPizza Margherita\n",
+          "macronut": {
+            "calorie": 600,
+            "proteine": 34,
+            "carboidrati": 28,
+            "grassi": 87
+          },
+          "price": 6,
+          "vegan": false,
+          "vegetarian": true
+        },
+        {
+          "name": "Pizza Marinara\n",
+          "macronut": {
+            "calorie": 200,
+            "proteine": 21,
+            "carboidrati": 70,
+            "grassi": 20
+          },
+          "price": 4,
+          "vegan": true,
+          "vegetarian": true
+        }
+      ],
+      "imageName": "dumbolone"
+    },
+    {
+      "name": "MA Sushi & Locanda di mare Milazzo",
+      "address": "Vico del Pittore, 32, 98057 Milazzo ME",
+      "hourtime": "19:00-00:00",
+      "plates": [
+        {
+          "name": "\nOnigiri 12 pz.\n",
+          "macronut": {
+            "calorie": 1343,
+            "proteine": 34,
+            "carboidrati": 28,
+            "grassi": 87
+          },
+          "price": 10,
+          "vegan": false,
+          "vegetarian": false
+        },
+        {
+          "name": "Osomaki 20 pz.\n",
+          "macronut": {
+            "calorie": 1080,
+            "proteine": 21,
+            "carboidrati": 52,
+            "grassi": 77
+          },
+          "price": 15,
+          "vegan": false,
+          "vegetarian": false
+        },
+        {
+          "name": "Panko Roll 10 pz.\n",
+          "macronut": {
+            "calorie": 788,
+            "proteine": 31,
+            "carboidrati": 22,
+            "grassi": 41
+          },
+          "price": 7,
+          "vegan": false,
+          "vegetarian": false
+        }
+      ],
+      "imageName": "masushi"
+    }
+  ]
+}

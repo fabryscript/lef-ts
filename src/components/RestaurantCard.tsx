@@ -28,7 +28,7 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
           <Paragraph>{orario}</Paragraph>
         </Card.Content>
         <Card.Actions>
-          <Button mode="outlined" onPress={btfn}>{btntext}</Button>
+          <Button color="green" mode="outlined" onPress={btfn}>{btntext}</Button>
         </Card.Actions>
       </Card>
     </View>

@@ -17,7 +17,7 @@ import merge from "deepmerge";
 interface RoutesProps {}
 
 // const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
-const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
+export const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 
 export const Routes: React.FC<RoutesProps> = () => {
   const { actualUser } = useContext(UserContext);

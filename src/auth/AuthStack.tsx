@@ -2,8 +2,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { useState } from "react";
 import { View } from "react-native";
 import { Banner, Button, Card, TextInput, Title } from "react-native-paper";
+import InsertProcess from "../additionalData/InsertProcess";
 import { AuthParamList, AuthNavProps } from "../paramlists/AuthParamList";
-import { auth, executeLogin } from "./firebase";
+import { auth } from "./firebase";
+import PasswordReset from "./PasswordReset";
 import Register from "./Register";
 
 interface AuthStackProps {}
@@ -18,10 +20,12 @@ function Login({ navigation }: AuthNavProps<"Login">) {
     setCredentialsNotFoundBadgeVisible,
   ] = useState<boolean | any>(false);
 
-  const handleLogIn = () => {
-    auth.signInWithEmailAndPassword(emailText, passwordText).catch((_error) => {
-      setCredentialsNotFoundBadgeVisible(true);
-    });
+  const handleLogIn = async () => {
+    await auth.signInWithEmailAndPassword(emailText, passwordText)
+      .then(() => {})
+      .catch((_error) => {
+        setCredentialsNotFoundBadgeVisible(true);
+      });
   };
 
   return (
@@ -60,8 +64,11 @@ function Login({ navigation }: AuthNavProps<"Login">) {
           >
             Log In
           </Button>
-          <Button onPress={() => navigation.navigate("Register")}>
+          <Button onPress={() => navigation.navigate("Registrazione")}>
             Non sei registrato? Cliccami!
+          </Button>
+          <Button onPress={() => navigation.navigate("PasswordReset")}>
+            Password Dimenticata? Cliccami!
           </Button>
         </Card.Content>
       </Card>
@@ -73,7 +80,9 @@ export const AuthStack: React.FC<AuthStackProps> = () => {
   return (
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="Registrazione" component={Register} />
+      <Stack.Screen name="InsertProcess" component={InsertProcess} />
+      <Stack.Screen name="PasswordReset" options={{headerTitle: 'Reset della Password'}} component={PasswordReset} />
     </Stack.Navigator>
   );
 };

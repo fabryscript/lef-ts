@@ -1,10 +1,10 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AppParamList } from "./paramlists/AppParamList";
-import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
-import { ClassicoStack } from "./tabs/ClassicoStack";
-import { VegetarianoStack } from "./tabs/VegetarianoStack";
-import { VeganoStack } from "./tabs/VeganoStack";
+import { Ionicons, MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
+import { ClassicoStack } from "./tabs/categories/ClassicoStack";
+import { VegetarianoStack } from "./tabs/categories/VegetarianoStack";
+import { VeganoStack } from "./tabs/categories/VeganoStack";
 import { OrdiniRecentiStack } from "./tabs/OrdiniRecentiStack";
 import { ImpostazioniStack } from "./tabs/ImpostazioniStack";
 
@@ -17,23 +17,20 @@ export const AppTabs: React.FC<AppTabsProps> = ({}) => {
     <Tabs.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
-          if (route.name === "Classico") {
-            return <FontAwesome5 name="hamburger" size={size} color={color} />;
-          } else if (route.name === "Impostazioni") {
-            return (
-              <Ionicons name={"settings-outline"} size={size} color={color} />
-            );
-          } else if (route.name === "OrdiniRecenti") {
-            return <FontAwesome5 name="history" size={size} color={color} />;
-          } else if (route.name === "Vegetariano") {
-            return <FontAwesome5 name="leaf" size={size} color={color} />;
-          } else if (route.name === "Vegano") {
-            return <FontAwesome5 name="tree" size={size} color={color} />;
-          }
+          if (route.name === "Classico")
+            return <MaterialCommunityIcons name="pasta" size={size} color={color} />;
+          else if (route.name === "Impostazioni")
+              return <Ionicons name={"settings-outline"} size={size} color={color} />
+          else if (route.name === "OrdiniRecenti")
+            return <AntDesign name="shoppingcart" size={size} color={color} />;
+          else if (route.name === "Vegetariano")
+            return <MaterialCommunityIcons name="food-steak-off" size={size} color={color} />;
+          else if (route.name === "Vegano")
+            return <MaterialCommunityIcons name="food-apple-outline" size={size} color={color} />;
         },
       })}
       tabBarOptions={{
-        activeTintColor: "blue",
+        activeTintColor: "green",
         inactiveTintColor: "gray",
       }}
     >

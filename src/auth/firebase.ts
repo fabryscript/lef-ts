@@ -8,7 +8,6 @@ import {
   REACT_APP_FIREBASE_PROJECT_ID,
   REACT_APP_FIREBASE_STORAGE_BUCKET,
 } from "@env";
-import AsyncStorage from "@react-native-community/async-storage";
 
 const firebaseConfig = {
   apiKey: REACT_APP_FIREBASE_API_KEY,
@@ -27,14 +26,26 @@ if (!firebase.apps.length) {
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
-export const executeRegistration = (email: string, password: string) => {
-  auth.createUserWithEmailAndPassword(email, password)
-  .then((user) => {
-    user.user?.sendEmailVerification().then(() => {
-      return false;
-    })
-  })
-  .catch((error) => {
+export const executeRegistration = async (email: string, password: string) => {
+  try {
+    return new Promise<boolean | string>((resolve, reject) => {
+      auth.createUserWithEmailAndPassword(email, password)
+        .then((user) => {
+          user.user?.sendEmailVerification().then(() => {
+            resolve(true);
+            if(user.additionalUserInfo?.isNewUser)
+              resolve('Nuovo utente')
+          });
+        })
+        .catch((_error) => {
+          const error = JSON.stringify(_error);
+          if(error.includes('email'))
+            reject('Email già in uso in un altro account');
+          else if(error.includes('password'))
+            reject('La password deve contenere almeno 6 caratteri');
+        })
+    });
+  } catch (error) {
     console.log(error);
-  })
+  }
 }

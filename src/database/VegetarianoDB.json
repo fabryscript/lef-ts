@@ -1,0 +1,24 @@
+{
+    "restaurants": [
+      {
+        "name": "Degus Pizzeria Ristorante",
+        "address": "Via Montecastro, 69, 98057 Milazzo ME",
+        "hourtime": "16:15-19:30",
+        "plates": [
+          {
+            "name": "\nPanino con Lattuga, Pomodori e Uova\n",
+            "macronut": {
+              "calorie": 250,
+              "proteine": 22,
+              "carboidrati": 100,
+              "grassi": 44
+            },
+            "price": 6.25,
+            "vegan": false,
+            "vegetarian": true
+          }
+        ],
+        "imageName": "degus"
+      }
+    ]
+  }
