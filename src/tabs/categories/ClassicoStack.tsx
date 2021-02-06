@@ -41,7 +41,7 @@ function Classico({ navigation }: GenericNavProps<"Classico">) {
                 orario={ristorante.hourtime}
                 btfn={() => {
                   navigation.navigate('Ristorante', {
-                    name: ristorante.name,
+                    restaurantName: ristorante.name,
                     piatti: ristorante.plates
                   })
                 }}

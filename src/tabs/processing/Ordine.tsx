@@ -113,7 +113,7 @@ export function Ordine({ route, navigation }: GenericNavProps<"Ordine">) {
         <Card style={genericCardMargin}>
           <Card.Content>
             <Title>
-              Piatti Disponibili per il ristorante: {route.params.name}
+              Piatti Disponibili per il ristorante: {route.params.restaurantName}
             </Title>
           </Card.Content>
         </Card>
@@ -142,10 +142,11 @@ export function Ordine({ route, navigation }: GenericNavProps<"Ordine">) {
               color="green"
               onPress={() => navigation.navigate("Ricevuto", {
                 amount: totale,
-                allPiatti: checkedPlatesObj
+                allPiatti: checkedPlatesObj,
+                restaurantName: route.params.restaurantName
               })}
             >
-              Conferma Ordine
+              Vai al Riepilogo e la Conferma
             </Button>
           </Card.Content>
         </Card>

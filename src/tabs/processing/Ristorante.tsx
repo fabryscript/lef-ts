@@ -27,7 +27,7 @@ export function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">)
       <View>
         <Card>
           <Card.Content>
-            <Title>Nome Ristorante: {route.params.name}</Title>
+            <Title>Nome Ristorante: {route.params.restaurantName}</Title>
             <Paragraph>Piatti Disponibili nel Menù: {piatti}</Paragraph>
           </Card.Content>
         </Card>
@@ -48,7 +48,7 @@ export function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">)
                 icon: "plus",
                 label: "Nuovo ordine da questo ristorante",
                 onPress: () => navigation.navigate("Ordine", {
-                  name: route.params.name,
+                  restaurantName: route.params.restaurantName,
                   allPiatti: route.params.piatti,
                 }),
               },

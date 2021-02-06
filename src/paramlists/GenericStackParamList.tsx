@@ -6,19 +6,27 @@ export type GenericStackParamList = {
     Classico: undefined,
     Vegetariano: undefined,
     Vegano: undefined,
+    OrdiniRecenti: undefined,
     Ristorante: {
-        name?: string,
+        restaurantName?: string,
         piatti?: plate[],
     },
     Ordine: {
-        name?: string,
+        restaurantName?: string,
         allPiatti?: plate[],
     },
     Ricevuto: {
+        restaurantName?: string,
         amount?: number,
         allPiatti?: plate[]
-    }
-
+    },
+    OrderDetails: {
+        restaurantName?: string,
+        amount?: number,
+        allPiatti?: plate[],
+        method?: string,
+        orderID?: string
+    },
 }
 
 export type GenericNavProps<T extends keyof GenericStackParamList> = {

@@ -36,7 +36,7 @@ function Vegano({ navigation }: GenericNavProps<"Vegano">) {
               orario={ristorante.hourtime}
               btfn={() => {
                 navigation.navigate("Ristorante", {
-                  name: ristorante.name,
+                  restaurantName: ristorante.name,
                   piatti: ristorante.plates,
                 });
               }}

@@ -6,7 +6,8 @@ export type ImpostazioniStackParamList = {
     Profilo: undefined,
     Info: undefined,
     Preferenze: undefined,
-    TOS: undefined
+    TOS: undefined,
+    InsertProcess: undefined
 }
 
 

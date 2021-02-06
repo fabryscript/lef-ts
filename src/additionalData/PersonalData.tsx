@@ -1,14 +1,20 @@
-import React from 'react';
-import { View } from 'react-native';
+import React from "react";
+import { View } from "react-native";
+import { ImpostazioniNavProps } from "../paramlists/ImpostazioniStackParamList";
+import firebase from "firebase";
+import { auth, firestore } from "../auth/firebase";
 
-interface PersonalDataProps {}
+const PersonalData = ({ navigation }: ImpostazioniNavProps<"Preferenze">) => {
+  const preferencesRef = firestore.collection("users").doc(`/${auth.currentUser?.uid}`);
 
-const PersonalData: React.FC<PersonalDataProps> = () =>{
-    return (
-        <View>
+  preferencesRef.get().then((data) => {
+    console.log(data);
+  })
+  return (
+    <View>
 
-        </View>
-    );
-}
+    </View>
+  );
+};
 
-export default PersonalData
+export default PersonalData;

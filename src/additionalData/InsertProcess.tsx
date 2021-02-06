@@ -1,17 +1,20 @@
-import React, { createFactory } from 'react';
-import { View } from 'react-native';
-import { Caption, Card } from 'react-native-paper';
+import React, { createFactory } from "react";
+import { View } from "react-native";
+import { Card } from "react-native-paper";
+import { ImpostazioniNavProps } from "../paramlists/ImpostazioniStackParamList";
 
 interface InsertProcessProps {}
 
-const InsertProcess: React.FC<InsertProcessProps> = ({}) =>{
-    return (
-        <View>
-            <Card>
-                <Card.Title>Informazioni Aggiuntive</Card.Title>
-            </Card>
-        </View>
-    );
-}
+const InsertProcess = ({
+  navigation,
+}: ImpostazioniNavProps<"InsertProcess">) => {
+  return (
+    <View>
+      <Card>
+        <Card.Title>Informazioni Aggiuntive</Card.Title>
+      </Card>
+    </View>
+  );
+};
 
-export default InsertProcess
+export default InsertProcess;

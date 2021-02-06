@@ -1,44 +1,69 @@
-import React from "react";
+import React, { useState } from "react";
 import { ScrollView } from "react-native";
 import {
   Card,
   Paragraph,
   Title,
-  Text
+  Text,
+  Button,
+  Banner
 } from "react-native-paper";
 import { GenericNavProps } from "../../paramlists/GenericStackParamList";
-import OrdiniRecentiDB from "../../database/OrdiniRecentiDB.json"
+import { addOrder, auth, firestore, timestamp } from "../../auth/firebase";
 
 export function OrderRecieved({route}: GenericNavProps<"Ricevuto">) {
-  const { allPiatti, amount } = route.params;
-  const _amount = amount!.toString()
+  const { allPiatti, amount, restaurantName } = route.params;
+  const [ showRecievedBadge, setShowRecievedBadge] = useState<boolean>(false)
+  const [ showErrorBadge, setShowErrorBadge] = useState<boolean>(false)
   return (
     <ScrollView style={{ flex: 1, alignContent: "center" }}>
+      <Banner
+        visible={showRecievedBadge}
+        actions={[
+          {
+            label: "Va bene!",
+            onPress: () => setShowRecievedBadge(false),
+          },
+        ]}
+        icon="check-bold"
+      >
+        Perfetto! Ordine ricevuto! Controlla la tua E-Mail per ulteriori informazioni.
+      </Banner>
+      <Banner
+        visible={showErrorBadge}
+        actions={[
+          {
+            label: "Capito.",
+            onPress: () => setShowErrorBadge(false),
+          },
+        ]}
+        icon="cancel"
+      >
+        Oh no! C'è stato un problema con l'inoltro del tuo ordine, potresti riprovare tra qualche minuto?
+      </Banner>
       <Card>
         <Card.Content>
           <Paragraph>
             {
               allPiatti?.map((piatto, index) => {
-                OrdiniRecentiDB.push({
-                  id: index,
-                  paymentDetails: {
-                    amount: _amount,
-                    method: 'PayPal'
-                  },
-                   place: piatto.name,
-                   where: 'Boh'
-                })
-                {/**Redux or Firebase Doc, gogo! */}
-                return(
-                  <Card key={index}>
-                    <Text>{piatto.name}</Text>
-                    <Text>{amount}</Text>
-                  </Card>
-                )
+                  return (
+                    <Card key={index}>
+                      <Text>{piatto.name}</Text>
+                      <Text>{amount}</Text>
+                    </Card>
+                  )
               })
             }
           </Paragraph>
-          <Title>✔Il tuo ordine è stato ricevuto con successo! Grazie!💗</Title>
+          <Title>Vuoi confermare l'ordine?</Title>
+          <Button onPress={() => addOrder({
+            restaurantName,
+            amount,
+            allPiatti,
+            user: auth.currentUser?.email,
+            paymentMethod: "Paypal *",
+            createdAt: timestamp
+          }).then((res) => res === true ? setShowRecievedBadge(true) : setShowErrorBadge(true))} mode="outlined">Sì!</Button>
         </Card.Content>
       </Card>
     </ScrollView>
