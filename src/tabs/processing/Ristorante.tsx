@@ -35,7 +35,8 @@ export function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">)
         <Portal>
           <FAB.Group
             visible={true}
-            color="green"
+            fabStyle={{backgroundColor: "#e3e5e3"}}
+            color="#000000"
             open={open}
             icon={open ? "plus" : "plus"}
             actions={[

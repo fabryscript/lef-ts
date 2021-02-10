@@ -9,7 +9,7 @@ import {
   Banner
 } from "react-native-paper";
 import { GenericNavProps } from "../../paramlists/GenericStackParamList";
-import { addOrder, auth, firestore, timestamp } from "../../auth/firebase";
+import { addOrder, auth, timestamp } from "../../auth/firebase";
 
 export function OrderRecieved({route}: GenericNavProps<"Ricevuto">) {
   const { allPiatti, amount, restaurantName } = route.params;
@@ -49,7 +49,7 @@ export function OrderRecieved({route}: GenericNavProps<"Ricevuto">) {
                   return (
                     <Card key={index}>
                       <Text>{piatto.name}</Text>
-                      <Text>{amount}</Text>
+                      <Text>€{amount}</Text>
                     </Card>
                   )
               })

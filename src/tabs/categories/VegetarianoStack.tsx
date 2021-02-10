@@ -7,8 +7,9 @@ import {
   GenericNavProps,
   GenericStackParamList,
 } from "../../paramlists/GenericStackParamList";
-import VegetarianoDB from "../../database/VegetarianoDB.json";
 import images from "../../assets/images";
+import { firestore } from "../../auth/firebase";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 interface VegetarianoStackProps {}
 
 const Stack = createStackNavigator<GenericStackParamList>();
@@ -19,6 +20,8 @@ function Vegetariano({ navigation }: GenericNavProps<"Vegetariano">) {
   const onChangeSearch = (query: React.SetStateAction<string>) =>
     setSearchQuery(query);
 
+  const vegetarianRestaurantsRef = firestore.collection("/vegetarian-restaurants");
+  const [vegetarianRestaurants] = useCollectionData(vegetarianRestaurantsRef);
   return (
     <View>
       <Searchbar
@@ -26,26 +29,33 @@ function Vegetariano({ navigation }: GenericNavProps<"Vegetariano">) {
         onChangeText={onChangeSearch}
         value={searchQuery}
       />
-      {VegetarianoDB.restaurants.map((ristorante, index) => {
-        const imgName = ristorante.imageName;
-        return (
-          <Card key={index}>
-            <RestaurantCard
-              text={ristorante.name}
-              indirizzo={ristorante.address}
-              orario={ristorante.hourtime}
-              btfn={() => {
-                navigation.navigate("Ristorante", {
-                  restaurantName: ristorante.name,
-                  piatti: ristorante.plates,
-                });
-              }}
-              btntext="esplora"
-              imageName={images[imgName]}
-            />
-          </Card>
-        );
-      })}
+      {
+        vegetarianRestaurants &&
+          vegetarianRestaurants.map((ristoranti: any, _index: number) => {
+            return ristoranti.restaurants.map(
+              (ristorante: any, index: number) => {
+                let imageName = ristorante.imageName;
+                return (
+                  <Card key={index}>
+                    <RestaurantCard
+                      text={ristorante.name}
+                      indirizzo={ristorante.address}
+                      orario={ristorante.hourtime}
+                      btfn={() => {
+                        navigation.navigate("Ristorante", {
+                          restaurantName: ristorante.name,
+                          piatti: ristorante.plates,
+                        });
+                      }}
+                      btntext="esplora"
+                      imageName={images[imageName]}
+                    />
+                  </Card>
+                );
+              }
+            );
+          })
+      }
     </View>
   );
 }

@@ -140,7 +140,7 @@ export function Ordine({ route, navigation }: GenericNavProps<"Ordine">) {
               disabled={checkedPlates.length === 0}
               mode="outlined"
               color="green"
-              onPress={() => navigation.navigate("Ricevuto", {
+              onPress={() => navigation.navigate("Riepilogo", {
                 amount: totale,
                 allPiatti: checkedPlatesObj,
                 restaurantName: route.params.restaurantName

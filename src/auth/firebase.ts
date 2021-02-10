@@ -47,7 +47,7 @@ export const executeRegistration = async (email: string, password: string) => {
         });
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -71,10 +71,10 @@ export const addOrder = async (order: Order) => {
           resolve(true);
         })
         .catch((_error) => {
-          resolve(false);
+          reject(false);
         });
     } catch (error) {
-      resolve(false);
+      reject(false);
     }
   });
 };

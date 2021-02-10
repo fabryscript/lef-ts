@@ -11,15 +11,17 @@ const OrderDetails = ({ route }: GenericNavProps<"OrderDetails">) => {
           <Title>Dettagli dell'ordine: {route.params.orderID}</Title>
           <Paragraph>Ristorante: {route.params.restaurantName}</Paragraph>
           <Paragraph>Metodo di Pagamento: {route.params.method}</Paragraph>
-          <Paragraph>Importo: {route.params.amount}</Paragraph>
+          <Paragraph>Importo: €{route.params.amount}</Paragraph>
           <Paragraph>Piatti ordinati:</Paragraph>
-          {route.params.allPiatti?.map((piatto, id) => {
-            return (
-              <Paragraph key={id}>
-                {piatto.name} - €{piatto.price}
-              </Paragraph>
-            );
-          })}
+          {
+            route.params.allPiatti?.map((piatto, id) => {
+              return (
+                <Paragraph key={id}>
+                  {piatto.name} - €{piatto.price}
+                </Paragraph>
+              );
+            })
+          }
         </Card.Content>
       </Card>
     </ScrollView>

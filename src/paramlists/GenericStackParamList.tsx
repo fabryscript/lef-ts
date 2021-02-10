@@ -15,7 +15,7 @@ export type GenericStackParamList = {
         restaurantName?: string,
         allPiatti?: plate[],
     },
-    Ricevuto: {
+    Riepilogo: {
         restaurantName?: string,
         amount?: number,
         allPiatti?: plate[]

@@ -20,7 +20,7 @@ function OrdiniRecenti({
   return (
     <ScrollView style={{ width: "100%" }}>
       {orders &&
-        orders.map((order: any, id) => {
+        orders.map((order: any, id: number) => {
           if (order.user === auth.currentUser?.email) {
             // id è + 1 poichè array index always starts at 0
             const { allPiatti, amount, paymentMethod, restaurantName } = order;
