@@ -24,9 +24,9 @@ Innanzitutto questo è un progetto creato con:
 
 Step per clonare la repo e lavorarci su!:
 
-- eseguire in una directory predisposta allo sviluppo il comando `git clone https://github.com/fabry-js/lef-ts`
+- eseguire, in una directory predisposta allo sviluppo, il comando `git clone https://github.com/fabry-js/lef-ts`
 - dopodichè `cd lef-ts`
-- eseguire `yarn install` che provvederà ad installare le dependencies dal file `yarn.lock`
+- eseguire `yarn install` che provvederà ad installare le dependencies.
 - infine `expo web` per una preview dell'applicazione con il vostro browser (🔥 Hot Reload incluso!)
 
 ***Happy coding***💓
