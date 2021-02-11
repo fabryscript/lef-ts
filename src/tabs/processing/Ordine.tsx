@@ -5,7 +5,6 @@ import {
   Title,
   Paragraph,
   Text,
-  Provider,
   Portal,
   Switch,
   Button,
@@ -13,7 +12,7 @@ import {
 } from "react-native-paper";
 import { plate } from "../../models/plate";
 import { GenericNavProps } from "../../paramlists/GenericStackParamList";
-
+// yarn add @types/react-redux
 const genericCardMargin = { marginTop: 10 };
 
 export function Ordine({ route, navigation }: GenericNavProps<"Ordine">) {
@@ -21,6 +20,7 @@ export function Ordine({ route, navigation }: GenericNavProps<"Ordine">) {
   const [shown, setShown] = useState(false);
   let plates: {} | null | undefined = [];
   const hideModal = () => setShown(false);
+  // const dispatch = useDispatch()
 
   if (allPiatti) {
     const [isSwitchOn, setIsSwitchOn] = useState<any[]>(
