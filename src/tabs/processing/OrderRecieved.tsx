@@ -11,7 +11,7 @@ import {
 import { GenericNavProps } from "../../paramlists/GenericStackParamList";
 import { addOrder, auth, timestamp } from "../../auth/firebase";
 
-export function OrderRecieved({route}: GenericNavProps<"Ricevuto">) {
+export function OrderRecieved({route}: GenericNavProps<"Riepilogo">) {
   const { allPiatti, amount, restaurantName } = route.params;
   const [ showRecievedBadge, setShowRecievedBadge] = useState<boolean>(false)
   const [ showErrorBadge, setShowErrorBadge] = useState<boolean>(false)
