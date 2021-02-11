@@ -50,11 +50,7 @@ function OrdiniRecenti({
               </>
             );
           } else {
-            return (
-              <View>
-                <Text>Eh no, qui non c'è nulla :&#40;</Text>
-              </View>
-            );
+            // ...
           }
         })}
     </ScrollView>
