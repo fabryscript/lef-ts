@@ -18,7 +18,7 @@ Questa è l'applicazione creata dall'azienda __Let's FIT!__ dell'ITT E.Majorana 
 
 Innanzitutto questo è un progetto creato con:
 
-- [ReactJS ](https://https://reactjs.org/)& [React Native(TS)](https://reactnative.dev/)
+- [ReactJS ](https://reactjs.org/)& [React Native(TS)](https://reactnative.dev/)
 - [React Native Paper](https://callstack.github.io/react-native-paper/)
 - [Git](https://git-scm.com/)
 
