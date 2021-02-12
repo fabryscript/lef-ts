@@ -6,14 +6,15 @@ import {
   Title,
   Text,
   Button,
-  Banner
+  Banner,
+  Appbar
 } from "react-native-paper";
 import { GenericNavProps } from "../../paramlists/GenericStackParamList";
 import { addOrder, auth, timestamp } from "../../auth/firebase";
 import { useSelector } from "react-redux";
 import { getCurrentCartItems, getCurrentTotal } from "../../store/cartSlice";
 
-export function OrderRecieved({route}: GenericNavProps<"Riepilogo">) {
+export function OrderRecieved({route, navigation}: GenericNavProps<"Riepilogo">) {
   const { restaurantName } = route.params;
   const [ showRecievedBadge, setShowRecievedBadge] = useState<boolean>(false);
   const [ showErrorBadge, setShowErrorBadge] = useState<boolean>(false);
@@ -24,6 +25,9 @@ export function OrderRecieved({route}: GenericNavProps<"Riepilogo">) {
 
   return (
     <ScrollView style={{ flex: 1, alignContent: "center" }}>
+      <Appbar.Header>
+        <Appbar.BackAction onPress={() => navigation.goBack()} />
+      </Appbar.Header>
       <Banner
         visible={showRecievedBadge}
         actions={[

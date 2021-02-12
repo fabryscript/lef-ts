@@ -67,10 +67,10 @@ function Classico({ navigation }: GenericNavProps<"Classico">) {
 export const ClassicoStack: React.FC<ClassicoStackProps> = ({}) => {
   return (
     <Stack.Navigator initialRouteName="Classico">
-      <Stack.Screen name="Classico" component={Classico} />
-      <Stack.Screen name="Ristorante" component={Ristorante} />
-      <Stack.Screen name="Ordine" component={Ordine} />
-      <Stack.Screen name="Riepilogo" component={OrderRecieved} />
+      <Stack.Screen name="Classico" options={{headerShown: false}} component={Classico} />
+      <Stack.Screen name="Ristorante" options={{headerShown: false}}  component={Ristorante} />
+      <Stack.Screen name="Ordine" options={{headerShown: false}}  component={Ordine} />
+      <Stack.Screen name="Riepilogo" options={{headerShown: false}}  component={OrderRecieved} />
     </Stack.Navigator>
   );
 };

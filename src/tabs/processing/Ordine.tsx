@@ -10,6 +10,7 @@ import {
   Button,
   Modal,
   List,
+  Appbar,
 } from "react-native-paper";
 import { useDispatch, connect } from "react-redux";
 import { plate } from "../../models/plate";
@@ -106,6 +107,9 @@ function Ordine({ route, navigation }: GenericNavProps<"Ordine">) {
 
     return (
       <ScrollView>
+        <Appbar.Header>
+          <Appbar.BackAction onPress={() => navigation.goBack()} />
+        </Appbar.Header>
         <Card style={genericCardMargin}>
           <Card.Content>
             <Title>
