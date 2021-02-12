@@ -1,7 +1,5 @@
 export type AppParamList = {
-    Classico: undefined,
-    Vegetariano: undefined,
-    Vegano: undefined,
+    Ordina: undefined,
     Impostazioni: undefined,
     OrdiniRecenti: undefined
 }

@@ -7,6 +7,7 @@ import {
   FAB,
   Provider,
   Portal,
+  Appbar,
 } from "react-native-paper";
 import { GenericNavProps } from "../../paramlists/GenericStackParamList";
 import { CombinedDarkTheme } from "../../Routes";
@@ -21,6 +22,9 @@ export function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">)
   return (
     <Provider theme={CombinedDarkTheme}>
       <ScrollView>
+        <Appbar.Header>
+          <Appbar.BackAction onPress={() => navigation.goBack()} />
+        </Appbar.Header>
         <Card>
           <Card.Content>
             <Title>Nome Ristorante: {restaurantName}</Title>
