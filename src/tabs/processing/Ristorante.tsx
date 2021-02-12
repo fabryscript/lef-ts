@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ScrollView } from "react-native";
 import {
   Card,
@@ -10,26 +10,13 @@ import {
 } from "react-native-paper";
 import { GenericNavProps } from "../../paramlists/GenericStackParamList";
 import { CombinedDarkTheme } from "../../Routes";
-import { useDownloadURL } from "react-firebase-hooks/storage";
-import { storage } from "../../auth/firebase";
 
 export function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">) {
   const [state, setState] = useState({ open: false });
-  const [storageImageName, setStorageImageName] = useState<string>();
   const onStateChange = ({ open }: { open: any; }) => setState({ open });
   const { open } = state;
 
   const { piatti, restaurantName } = route.params;
-
-  useEffect(() =>{
-   let name = "";
-   piatti?.map((piatto) => name = piatto.name);
-   setStorageImageName(name);
-   console.log(name);
-  }, [storageImageName])
-
-  const storageRef = storage.refFromURL(`gs://letsfitja-eatfit.appspot.com/${storageImageName}.jpg`)
-  const [uri] = useDownloadURL(storageRef);
 
   return (
     <Provider theme={CombinedDarkTheme}>
@@ -45,7 +32,6 @@ export function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">)
           piatti &&
             piatti.map((plate, id) => (
               <Card style={{marginTop: 10}} key={id}>
-                <Card.Cover source={{uri}} />
                 <Card.Content>
                   <Title>{plate.name}</Title>
                   <Paragraph>€{plate.price}</Paragraph>

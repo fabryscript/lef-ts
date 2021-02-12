@@ -10,11 +10,18 @@ import {
 } from "react-native-paper";
 import { GenericNavProps } from "../../paramlists/GenericStackParamList";
 import { addOrder, auth, timestamp } from "../../auth/firebase";
+import { useSelector } from "react-redux";
+import { getCurrentCartItems, getCurrentTotal } from "../../store/cartSlice";
 
 export function OrderRecieved({route}: GenericNavProps<"Riepilogo">) {
-  const { allPiatti, amount, restaurantName } = route.params;
-  const [ showRecievedBadge, setShowRecievedBadge] = useState<boolean>(false)
-  const [ showErrorBadge, setShowErrorBadge] = useState<boolean>(false)
+  const { restaurantName } = route.params;
+  const [ showRecievedBadge, setShowRecievedBadge] = useState<boolean>(false);
+  const [ showErrorBadge, setShowErrorBadge] = useState<boolean>(false);
+
+  const cartItems = useSelector(getCurrentCartItems);
+  const totale = useSelector(getCurrentTotal);
+  const allPiatti = cartItems.map((item) => item);
+
   return (
     <ScrollView style={{ flex: 1, alignContent: "center" }}>
       <Banner
@@ -44,26 +51,36 @@ export function OrderRecieved({route}: GenericNavProps<"Riepilogo">) {
       <Card>
         <Card.Content>
           <Paragraph>
+          <Card>
             {
-              allPiatti?.map((piatto, index) => {
-                  return (
-                    <Card key={index}>
-                      <Text>{piatto.name}</Text>
-                      <Text>€{amount}</Text>
-                    </Card>
-                  )
+              cartItems.map((item, id) => {
+                const {name, amount} = item;
+                return (
+                  <React.Fragment key={id}>
+                    <Text>{name}</Text>
+                    <Text>€{amount}</Text>
+                    <Text>Totale: €{totale}</Text>
+                  </React.Fragment>
+                )
               })
             }
+          </Card>
           </Paragraph>
           <Title>Vuoi confermare l'ordine?</Title>
-          <Button onPress={() => addOrder({
-            restaurantName,
-            amount,
-            allPiatti,
-            user: auth.currentUser?.email,
-            paymentMethod: "Paypal *",
-            createdAt: timestamp
-          }).then((res) => res === true ? setShowRecievedBadge(true) : setShowErrorBadge(true))} mode="outlined">Sì!</Button>
+          <Button
+            onPress={() => addOrder({
+              restaurantName,
+              allPiatti,
+              totale,
+              user: auth.currentUser?.email,
+              paymentMethod: "Paypal *",
+              createdAt: timestamp
+            })
+            .catch((error) => console.log(error))
+            .then((res) => res === true ? setShowRecievedBadge(true) : setShowErrorBadge(true)
+            )}
+            mode="outlined"
+          >Sì!</Button>
         </Card.Content>
       </Card>
     </ScrollView>

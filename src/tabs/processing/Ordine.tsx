@@ -5,22 +5,27 @@ import {
   Title,
   Paragraph,
   Text,
-  Provider,
   Portal,
   Switch,
   Button,
   Modal,
+  List,
 } from "react-native-paper";
+import { useDispatch, connect } from "react-redux";
 import { plate } from "../../models/plate";
 import { GenericNavProps } from "../../paramlists/GenericStackParamList";
+import { addItemToCart, updateTotal } from "../../store/cartSlice";
+import PlateInfosCard from "./plate-infos/PlateInfosCard";
+import PlateNameCard from "./plate-infos/PlateNameCard";
+import TotalMacronutsDetailsCard from "./plate-infos/TotalMacronutsDetailsCard";
 
 const genericCardMargin = { marginTop: 10 };
+const mapDispatch = { addItemToCart }
 
-export function Ordine({ route, navigation }: GenericNavProps<"Ordine">) {
+function Ordine({ route, navigation }: GenericNavProps<"Ordine">) {
   const allPiatti = route.params.allPiatti;
-  const [shown, setShown] = useState(false);
   let plates: {} | null | undefined = [];
-  const hideModal = () => setShown(false);
+  const dispatch = useDispatch();
 
   if (allPiatti) {
     const [isSwitchOn, setIsSwitchOn] = useState<any[]>(
@@ -55,14 +60,7 @@ export function Ordine({ route, navigation }: GenericNavProps<"Ordine">) {
               onValueChange={(value) => onToggleSwitch(value, element, index)}
             />
             €{element.price} - {element.name}
-            <Button
-              onPress={() => setShown(true)}
-              mode="outlined"
-              color="green"
-              disabled={checkedPlatesObj.length === 0}
-            >
-              Mostra Macronutrienti
-            </Button>
+
           </Paragraph>
         </Card.Content>
       </Card>
@@ -70,15 +68,14 @@ export function Ordine({ route, navigation }: GenericNavProps<"Ordine">) {
 
     let totale = 0;
 
-    const checkedPlates = checkedPlatesObj.map((el: any, index: number) => {
-      totale += el.price;
-
+    const checkedPlates = checkedPlatesObj.map((plate: any, index: number) => {
+      const {name, price} = plate;
+      totale += price;
       return (
-        <Card style={genericCardMargin} key={index}>
-          <Card.Content>
-            <Text>{el.name}</Text>
-          </Card.Content>
-        </Card>
+        <PlateNameCard
+          key={index}
+          name={name}
+        />
       );
     });
 
@@ -87,8 +84,8 @@ export function Ordine({ route, navigation }: GenericNavProps<"Ordine">) {
     let totaleCarbodrati = 0;
     let totaleGrassi = 0;
 
-    const modalForMacros = checkedPlatesObj.map((el: any, index: number) => {
-      const { calorie, proteine, carboidrati, grassi } = el.macronut;
+    const cardForMacros = checkedPlatesObj.map((plate: any, index: number) => {
+      const { calorie, proteine, carboidrati, grassi } = plate.macronut;
 
       totaleCalorie += calorie;
       totaleProteine += proteine;
@@ -96,15 +93,14 @@ export function Ordine({ route, navigation }: GenericNavProps<"Ordine">) {
       totaleGrassi += grassi;
 
       return (
-        <Card key={index}>
-          <Card.Content>
-            <Title>Valori nutrizionali su 100g del prodotto: {el.name}</Title>
-            <Paragraph>Calorie: {calorie} kCal</Paragraph>
-            <Paragraph>Proteine: {proteine} g</Paragraph>
-            <Paragraph>Carboidrati: {carboidrati} g</Paragraph>
-            <Paragraph>Grassi: {grassi} g</Paragraph>
-          </Card.Content>
-        </Card>
+        <PlateInfosCard
+         key={index}
+         name={plate.name}
+         calorie={calorie}
+         carboidrati={carboidrati}
+         grassi={grassi}
+         proteine={proteine}
+        />
       );
     });
 
@@ -128,33 +124,50 @@ export function Ordine({ route, navigation }: GenericNavProps<"Ordine">) {
           <Card.Content>
             <Title>Totale: €{totale}</Title>
             <Title>
-              Totale Calorie: {totaleCalorie} kCal su 2440 del tuo tetto
-              giornaliero
+              Totale Calorie: {totaleCalorie} kCal
             </Title>
-            <Card.Content>
-              <Text>Totale Proteine: {totaleProteine} g</Text>
-              <Text>Totale Carboidrati: {totaleCarbodrati} g</Text>
-              <Text>Totale Grassi: {totaleGrassi} g</Text>
-            </Card.Content>
+            <Text style={{fontStyle: "italic"}}>
+             su 2440 del tuo tetto giornaliero
+            </Text>
+            <List.Accordion
+              title="Informazioni sui piatti selezionati"
+            >
+                {cardForMacros}
+            </List.Accordion>
+              <List.Accordion title="Macronutrienti totali">
+                <TotalMacronutsDetailsCard
+                  carboidrati={totaleCarbodrati}
+                  proteine={totaleProteine}
+                  grassi={totaleGrassi}
+                />
+              </List.Accordion>
             <Button
               disabled={checkedPlates.length === 0}
               mode="outlined"
               color="green"
-              onPress={() => navigation.navigate("Riepilogo", {
-                amount: totale,
-                allPiatti: checkedPlatesObj,
-                restaurantName: route.params.restaurantName
-              })}
+              onPress={() => {
+                checkedPlatesObj.map((plate, _id) => {
+                  dispatch(
+                    addItemToCart({
+                      name: plate.name,
+                      amount: plate.price,
+                    })
+                  );
+                  dispatch(
+                    updateTotal({
+                      totale
+                    })
+                  )
+                });
+                navigation.navigate("Riepilogo", {
+                  restaurantName: route.params.restaurantName
+                })
+              }}
             >
               Vai al Riepilogo e la Conferma
             </Button>
           </Card.Content>
         </Card>
-        <Portal>
-          <Modal visible={shown} onDismiss={hideModal}>
-            {modalForMacros}
-          </Modal>
-        </Portal>
       </ScrollView>
     );
   }
@@ -164,3 +177,5 @@ export function Ordine({ route, navigation }: GenericNavProps<"Ordine">) {
     </Card>
   );
 }
+
+export default connect(null, mapDispatch)(Ordine);
