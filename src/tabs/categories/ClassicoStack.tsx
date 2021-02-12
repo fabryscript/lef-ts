@@ -5,7 +5,7 @@ import { Searchbar, Card } from "react-native-paper";
 import { RestaurantCard } from "../../components/RestaurantCard";
 import images from "../../assets/images";
 import { Ristorante } from "../processing/Ristorante";
-import { Ordine } from "../processing/Ordine";
+import Ordine from "../processing/Ordine";
 import { OrderRecieved } from "../processing/OrderRecieved";
 import {
   GenericNavProps,

@@ -54,12 +54,18 @@ export const executeRegistration = async (email: string, password: string) => {
 
 export let timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
+interface OrderPlate {
+  name: string,
+  price: number,
+  quantity?: number,
+}
+
 interface Order {
-  restaurantName: string | undefined;
-  amount: number | undefined;
-  allPiatti: plate[] | undefined;
-  user: string | null | undefined;
-  paymentMethod: string | undefined;
+  restaurantName?: string | undefined;
+  totale?: number | undefined;
+  allPiatti?: OrderPlate[] | undefined;
+  user?: string | null | undefined;
+  paymentMethod?: string | undefined;
   createdAt?: firebase.firestore.FieldValue;
 }
 export const addOrder = async (order: Order) => {

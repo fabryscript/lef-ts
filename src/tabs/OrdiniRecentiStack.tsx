@@ -1,8 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import { ScrollView, View } from "react-native";
-import { Button, Card, Text, Title } from "react-native-paper";
-import { CardHistory } from "../components/CardHistory";
+import { ScrollView } from "react-native";
+import { Button, Card, Title } from "react-native-paper";
 import { auth, firestore } from "../auth/firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { GenericNavProps } from "../paramlists/GenericStackParamList";
@@ -11,7 +10,6 @@ interface OrdiniRecentiStackProps {}
 
 function OrdiniRecenti({
   navigation,
-  route,
 }: GenericNavProps<"OrdiniRecenti">) {
   const ordersCollectionRef = firestore.collection("/orders");
   const query = ordersCollectionRef.orderBy("createdAt").limit(100);
@@ -23,7 +21,8 @@ function OrdiniRecenti({
         orders.map((order: any, id: number) => {
           if (order.user === auth.currentUser?.email) {
             // id è + 1 poichè array index always starts at 0
-            const { allPiatti, amount, paymentMethod, restaurantName } = order;
+            console.log(order)
+            const { allPiatti, totale, paymentMethod, restaurantName } = order;
             return (
               <>
                 <Card key={id}>
@@ -36,7 +35,7 @@ function OrdiniRecenti({
                       onPress={() =>
                         navigation.navigate("OrderDetails", {
                           allPiatti,
-                          amount,
+                          amount: totale,
                           method: paymentMethod,
                           orderID: `Ordine #${id + 1}`,
                           restaurantName,

@@ -1,39 +1,41 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { itemAddedToCart } from "./cartActions";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 const slice = createSlice({
-    name: "cart",
-    initialState: {
-        cart: []
+  name: "cart",
+  initialState: {
+    cart: [],
+    totale: 0
+  },
+  reducers: {
+    addItemToCart: (items: any, action) => {
+      const { name, amount } = action.payload;
+      items.cart.push({
+        name,
+        amount,
+      });
     },
-    reducers: {
-        itemAdded: (items: any, action) => {
-            const {name, amount, total} = action.payload;
-            items.cart.push({
-                name,
-                amount,
-                total
-            });
-        },
-        itemRemoved: (items: any, _action) => {
-            items.cart.pop();
-        }
+    getCartItems: (items: any) => {
+        return items.cart;
+    },
+    removeItemFromCart: (items: any) => items.cart.pop(),
+    updateTotal: (items: any, action) => {
+        items.totale += action.payload.totale;
     }
+  },
 });
 
-const {itemAdded, itemRemoved} = slice.actions;
+export const { addItemToCart, removeItemFromCart, getCartItems, updateTotal } = slice.actions;
 
 export default slice.reducer;
 
-// Action Creators
+// Selectors
 
-export const addItemToCart = (item: any) => (
-    itemAddedToCart({
-        name: item.name,
-        amount: item.amount,
-        total: item.total,
-        type: itemAdded.type
-    })
+export const getCurrentCartItems = createSelector(
+    (state: any) => state.cart.cart,
+    (items: Array<any>) => items.map((item) => item)
 )
 
-// loadCartItems
+export const getCurrentTotal = createSelector(
+    (state: any) => state.cart.totale,
+    (totale: number) => totale
+)
