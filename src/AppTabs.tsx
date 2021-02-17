@@ -1,7 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AppParamList } from "./paramlists/AppParamList";
-import { Ionicons, MaterialCommunityIcons, AntDesign, FontAwesome } from "@expo/vector-icons";
+import { Ionicons, AntDesign, FontAwesome } from "@expo/vector-icons";
 import { OrdiniRecentiStack } from "./tabs/OrdiniRecentiStack";
 import { ImpostazioniStack } from "./tabs/ImpostazioniStack";
 import TopTabs from "./tabs/TopTabs";

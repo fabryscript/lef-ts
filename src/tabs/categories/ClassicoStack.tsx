@@ -19,9 +19,9 @@ interface ClassicoStackProps {}
 const Stack = createStackNavigator<GenericStackParamList>();
 
 function Classico({ navigation }: GenericNavProps<"Classico">) {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState<string | any>();
 
-  const onChangeSearch = (query: React.SetStateAction<string>) =>
+  const onChangeSearch = (query: React.SetStateAction<string| undefined>) =>
     setSearchQuery(query);
 
   const classicoRestaurantsRef = firestore.collection("/classico-restaurants");
