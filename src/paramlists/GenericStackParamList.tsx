@@ -27,6 +27,7 @@ export type GenericStackParamList = {
         method?: string,
         orderID?: string
     },
+    Step: undefined
 }
 
 export type GenericNavProps<T extends keyof GenericStackParamList> = {
