@@ -1,11 +1,7 @@
 # TODOS - App
 
-- Gli utenti possono scegliere la propria porzione
 - Improve del menù e del riepilogo ordine
-- Rimuovere tutti i PaperProviders non necessari e usarne solo uno
-- Sistema di pagamento
-- In ogni Menù del Ristorante, per gli ingredienti che quel ristorante offre, fare una guida step-by-step nella composizione del piatto, per poi avere sempre un riepilogo (tipo un header, vedi un pò tu) disponibile, e giungere quindi ad un riepilogo finale.
-
+- currentOrderRestaurantName deve funzionare nella action `navigation.navigate("Riepilogo", ...)`
 ## Dev
 
 - Rivedi l'intera logica dell'ordine, dato che qui non operiamo più con "piatti" ma con singoli ingredienti, stacca la branch.
