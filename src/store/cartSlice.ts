@@ -4,14 +4,16 @@ const slice = createSlice({
   name: "cart",
   initialState: {
     cart: [],
-    totale: 0
+    totale: 0,
+    currentOrderRestaurantName: ""
   },
   reducers: {
     addItemToCart: (items: any, action) => {
-      const { name, amount } = action.payload;
+      const { name, amount, quantity } = action.payload;
       items.cart.push({
         name,
         amount,
+        quantity
       });
     },
     getCartItems: (items: any) => {
@@ -20,11 +22,14 @@ const slice = createSlice({
     removeItemFromCart: (items: any) => items.cart.pop(),
     updateTotal: (items: any, action) => {
         items.totale += action.payload.totale;
+    },
+    updateRestaurantName: (items: any, action) => {
+      items.currentOrderRestaurantName = action.payload.restaurantName;
     }
   },
 });
 
-export const { addItemToCart, removeItemFromCart, getCartItems, updateTotal } = slice.actions;
+export const { addItemToCart, removeItemFromCart, getCartItems, updateTotal, updateRestaurantName } = slice.actions;
 
 export default slice.reducer;
 
@@ -38,4 +43,9 @@ export const getCurrentCartItems = createSelector(
 export const getCurrentTotal = createSelector(
     (state: any) => state.cart.totale,
     (totale: number) => totale
+)
+
+export const getCurrentOrderRestaurantName = createSelector(
+    (state: any) => state.cart.currentOrderRestaurantName,
+    (currentName: string) => currentName
 )

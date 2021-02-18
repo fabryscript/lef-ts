@@ -57,13 +57,13 @@ export let timestamp = firebase.firestore.FieldValue.serverTimestamp();
 interface OrderPlate {
   name: string,
   price: number,
-  quantity?: number,
+  quantity?: string,
 }
 
 interface Order {
   restaurantName?: string | undefined;
   totale?: number | undefined;
-  allPiatti?: OrderPlate[] | undefined;
+  allIngredients?: OrderPlate[] | undefined;
   user?: string | null | undefined;
   paymentMethod?: string | undefined;
   createdAt?: firebase.firestore.FieldValue;

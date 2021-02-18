@@ -14,14 +14,14 @@ import { addOrder, auth, timestamp } from "../../auth/firebase";
 import { useSelector } from "react-redux";
 import { getCurrentCartItems, getCurrentTotal } from "../../store/cartSlice";
 
-export function OrderRecieved({route, navigation}: GenericNavProps<"Riepilogo">) {
+export function Riepilogo({route, navigation}: GenericNavProps<"Riepilogo">) {
   const { restaurantName } = route.params;
   const [ showRecievedBadge, setShowRecievedBadge] = useState<boolean>(false);
   const [ showErrorBadge, setShowErrorBadge] = useState<boolean>(false);
 
   const cartItems = useSelector(getCurrentCartItems);
   const totale = useSelector(getCurrentTotal);
-  const allPiatti = cartItems.map((item) => item);
+  const allIngredients = cartItems.map((item) => item);
 
   return (
     <ScrollView style={{ flex: 1, alignContent: "center" }}>
@@ -74,7 +74,7 @@ export function OrderRecieved({route, navigation}: GenericNavProps<"Riepilogo">)
           <Button
             onPress={() => addOrder({
               restaurantName,
-              allPiatti,
+              allIngredients,
               totale,
               user: auth.currentUser?.email,
               paymentMethod: "Paypal *",

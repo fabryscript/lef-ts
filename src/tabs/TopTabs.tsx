@@ -1,6 +1,6 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { ClassicoStack } from "./categories/ClassicoStack";
+import ClassicoStack from "./categories/ClassicoStack";
 import { VeganoStack } from "./categories/VeganoStack";
 import { VegetarianoStack } from "./categories/VegetarianoStack";
 

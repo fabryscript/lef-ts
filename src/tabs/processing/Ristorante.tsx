@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView } from "react-native";
 import {
   Card,
@@ -9,15 +9,42 @@ import {
   Portal,
   Appbar,
 } from "react-native-paper";
+import { connect, useDispatch } from "react-redux";
 import { GenericNavProps } from "../../paramlists/GenericStackParamList";
 import { CombinedDarkTheme } from "../../Routes";
+import { updateRestaurantName } from "../../store/cartSlice";
+import { addIngredients } from "../../store/ingredientsSlice";
 
-export function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">) {
-  const [state, setState] = useState({ open: false });
-  const onStateChange = ({ open }: { open: any; }) => setState({ open });
-  const { open } = state;
+const mapDispatch = {addIngredients};
 
-  const { piatti, restaurantName } = route.params;
+function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">) {
+ const [state, setState] = useState({ open: false });
+ const onStateChange = ({ open }: { open: any; }) => setState({ open });
+ const { open } = state;
+ const { piatti, restaurantName } = route.params;
+
+ const dispatch = useDispatch();
+
+ const transitionToFasi = () => {
+  dispatch(
+    updateRestaurantName({
+      restaurantName
+    })
+  )
+  navigation.navigate("Fasi");
+ }
+  // Questo useEffect() serve per mettere nello store gli ingredienti del ristorante corrente
+  // che sta venendo selezionato
+
+  useEffect(() => {
+    piatti?.forEach((ingredientName, _id) => {
+      dispatch(
+        addIngredients({
+          ingredientName
+        })
+      );
+    });
+  }, [piatti]);
 
   return (
     <Provider theme={CombinedDarkTheme}>
@@ -28,7 +55,7 @@ export function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">)
         <Card>
           <Card.Content>
             <Title>Nome Ristorante: {restaurantName}</Title>
-            <Paragraph>Piatti Disponibili nel Menù:</Paragraph>
+            <Paragraph>Ingredienti Disponibili nel Menù:</Paragraph>
           </Card.Content>
         </Card>
 
@@ -60,10 +87,7 @@ export function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">)
               {
                 icon: "plus",
                 label: "Nuovo ordine da questo ristorante",
-                onPress: () => navigation.navigate("Ordine", {
-                  restaurantName: route.params.restaurantName,
-                  allPiatti: route.params.piatti,
-                }),
+                onPress: () => transitionToFasi(),
               },
             ]}
             onStateChange={onStateChange} />
@@ -72,3 +96,5 @@ export function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">)
     </Provider>
   );
 }
+
+export default connect(null, mapDispatch)(Ristorante)

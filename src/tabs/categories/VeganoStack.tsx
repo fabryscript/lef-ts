@@ -10,9 +10,9 @@ import {
 import images from "../../assets/images";
 import { firestore } from "../../auth/firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-import { OrderRecieved } from "../processing/OrderRecieved";
-import Ordine from "../processing/Ordine";
-import { Ristorante } from "../processing/Ristorante";
+import { Riepilogo } from "../processing/Riepilogo";
+import Ristorante from "../processing/Ristorante";
+import Fasi from "../processing/phases/Fasi";
 interface VeganoStackProps {}
 
 const Stack = createStackNavigator<GenericStackParamList>();
@@ -68,8 +68,8 @@ export const VeganoStack: React.FC<VeganoStackProps> = ({}) => {
     <Stack.Navigator>
       <Stack.Screen name="Vegano" options={{headerShown: false}} component={Vegano} />
       <Stack.Screen name="Ristorante" options={{headerShown: false}} component={Ristorante} />
-      <Stack.Screen name="Ordine" options={{headerShown: false}} component={Ordine} />
-      <Stack.Screen name="Riepilogo" options={{headerShown: false}} component={OrderRecieved} />
+      <Stack.Screen name="Fasi" options={{headerShown: false}} component={Fasi} />
+      <Stack.Screen name="Riepilogo" options={{headerShown: false}} component={Riepilogo} />
     </Stack.Navigator>
   );
 };

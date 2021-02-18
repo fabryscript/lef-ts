@@ -1,11 +1,11 @@
 import React from "react";
 import { Card, Text } from "react-native-paper";
 
-interface PlateNameCardProps {
+interface IngredientNameCardProps {
   name: string;
 }
 
-const PlateNameCard = ({ name }: PlateNameCardProps) => (
+const IngredientNameCard = ({ name }: IngredientNameCardProps) => (
   <Card>
     <Card.Content>
       <Text>{name}</Text>
@@ -13,4 +13,4 @@ const PlateNameCard = ({ name }: PlateNameCardProps) => (
   </Card>
 );
 
-export default PlateNameCard;
+export default IngredientNameCard;

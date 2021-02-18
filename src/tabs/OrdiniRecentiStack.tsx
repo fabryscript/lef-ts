@@ -21,8 +21,7 @@ function OrdiniRecenti({
         orders.map((order: any, id: number) => {
           if (order.user === auth.currentUser?.email) {
             // id è + 1 poichè array index always starts at 0
-            console.log(order)
-            const { allPiatti, totale, paymentMethod, restaurantName } = order;
+            const { allIngredients, totale, paymentMethod, restaurantName } = order;
             return (
               <>
                 <Card key={id}>
@@ -34,7 +33,7 @@ function OrdiniRecenti({
                     <Button
                       onPress={() =>
                         navigation.navigate("OrderDetails", {
-                          allPiatti,
+                          allIngredients,
                           amount: totale,
                           method: paymentMethod,
                           orderID: `Ordine #${id + 1}`,

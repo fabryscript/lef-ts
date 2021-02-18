@@ -4,19 +4,22 @@ import { ScrollView } from "react-native";
 import { Searchbar, Card } from "react-native-paper";
 import { RestaurantCard } from "../../components/RestaurantCard";
 import images from "../../assets/images";
-import { Ristorante } from "../processing/Ristorante";
-import Ordine from "../processing/Ordine";
-import { OrderRecieved } from "../processing/OrderRecieved";
+import Ristorante from "../processing/Ristorante";
+import Fasi from "../processing/phases/Fasi";
+import { Riepilogo } from "../processing/Riepilogo";
 import {
   GenericNavProps,
   GenericStackParamList,
 } from "../../paramlists/GenericStackParamList";
 import { firestore } from "../../auth/firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import { connect, useDispatch } from "react-redux";
+import { addItemToCart } from "../../store/cartSlice";
 
 interface ClassicoStackProps {}
 
 const Stack = createStackNavigator<GenericStackParamList>();
+const mapDispatch = { addItemToCart };
 
 function Classico({ navigation }: GenericNavProps<"Classico">) {
   const [searchQuery, setSearchQuery] = useState<string | any>();
@@ -39,17 +42,17 @@ function Classico({ navigation }: GenericNavProps<"Classico">) {
           classicoRestaurants.map((ristoranti: any, _index: number) => {
             return ristoranti.restaurants.map(
               (ristorante: any, index: number) => {
-                let imageName = ristorante.imageName;
+                const {imageName, name, address, hourtime, plates} = ristorante;
                 return (
                   <Card key={index}>
                     <RestaurantCard
-                      text={ristorante.name}
-                      indirizzo={ristorante.address}
-                      orario={ristorante.hourtime}
+                      text={name}
+                      indirizzo={address}
+                      orario={hourtime}
                       btfn={() => {
                         navigation.navigate("Ristorante", {
-                          restaurantName: ristorante.name,
-                          piatti: ristorante.plates,
+                          restaurantName: name,
+                          piatti: plates,
                         });
                       }}
                       btntext="esplora"
@@ -64,13 +67,15 @@ function Classico({ navigation }: GenericNavProps<"Classico">) {
     </ScrollView>
   );
 }
-export const ClassicoStack: React.FC<ClassicoStackProps> = ({}) => {
+const ClassicoStack: React.FC<ClassicoStackProps> = ({}) => {
   return (
     <Stack.Navigator initialRouteName="Classico">
       <Stack.Screen name="Classico" options={{headerShown: false}} component={Classico} />
       <Stack.Screen name="Ristorante" options={{headerShown: false}}  component={Ristorante} />
-      <Stack.Screen name="Ordine" options={{headerShown: false}}  component={Ordine} />
-      <Stack.Screen name="Riepilogo" options={{headerShown: false}}  component={OrderRecieved} />
+      <Stack.Screen name="Fasi" options={{headerShown: false}}  component={Fasi} />
+      <Stack.Screen name="Riepilogo" options={{headerShown: false}}  component={Riepilogo} />
     </Stack.Navigator>
   );
 };
+
+export default connect(null, mapDispatch)(ClassicoStack);

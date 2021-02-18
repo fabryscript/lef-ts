@@ -48,6 +48,7 @@ function Login({ navigation }: AuthNavProps<"Login">) {
           <Title style={{fontSize: 12, fontStyle: 'italic'}}>Assicurati di aver verificato l'email!</Title>
           <TextInput
             label="Email"
+            autoFocus
             value={emailText}
             onChangeText={(text) => setEmailText(text)}
           />
