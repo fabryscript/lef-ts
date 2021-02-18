@@ -23,7 +23,7 @@
     "expo": "~40.0.1",
     "expo-status-bar": "~1.0.3",
     "firebase": "^8.2.6",
-    "firebase-tools": "^9.3.0",
+    "firebase-tools": "^9.4.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-firebase-hooks": "^2.2.0",
