@@ -22,7 +22,7 @@
     "deepmerge": "^4.2.2",
     "expo": "~40.0.1",
     "expo-status-bar": "~1.0.3",
-    "firebase": "^8.2.6",
+    "firebase": "^8.2.7",
     "firebase-tools": "^9.3.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
