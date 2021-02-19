@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { createStackNavigator } from "@react-navigation/stack";
 import {
   GenericNavProps,
-  GenericStackParamList,
 } from "../../../paramlists/GenericStackParamList";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
@@ -19,14 +17,11 @@ import IngredientInfosCard from "../ingredient-infos/IngredientInfosCard";
 import IngredientNameCard from "../ingredient-infos/IngredientNameCard";
 import TotalMacronutsDetailsCard from "../ingredient-infos/TotalMacronutsDetailsCard";
 import Slider from "@react-native-community/slider";
-import FaseProteine from "./FaseProteine";
-import FaseGrassi from "./FaseGrassi";
 
 const mapDispatch = { addItemToCart };
-const Stack = createStackNavigator<GenericStackParamList>();
 const genericCardMargin = { marginTop: "1%" };
 
-function FaseCarboidrati({ navigation }: GenericNavProps<"Fasi">) {
+function FaseProteine({ navigation }: GenericNavProps<"Fasi">) {
   const allIngredients = useSelector(getCurrentIngredients);
   const currentOrderRestaurantName = useSelector(getCurrentOrderRestaurantName);
 
@@ -36,7 +31,7 @@ function FaseCarboidrati({ navigation }: GenericNavProps<"Fasi">) {
   const mappedIngredients = allIngredients.map((ingredient) => ingredient);
 
   const filteredByPhaseIngredients = mappedIngredients.filter(
-    (ingredient) => ingredient.name.phase === "carboidrati"
+    (ingredient) => ingredient.name.phase === "proteine"
   );
 
   if (filteredByPhaseIngredients) {
@@ -155,7 +150,7 @@ function FaseCarboidrati({ navigation }: GenericNavProps<"Fasi">) {
       <ScrollView>
         <Appbar>
           <Appbar.Header>
-            <Title>Fonte di Carboidrati</Title>
+            <Title>Fonte di Proteine</Title>
           </Appbar.Header>
         </Appbar>
         <Card style={genericCardMargin}>
@@ -187,8 +182,17 @@ function FaseCarboidrati({ navigation }: GenericNavProps<"Fasi">) {
                 grassi={totaleGrassi}
               />
             </List.Accordion>
+          </Card.Content>
+          <Card.Actions>
             <Button
-              style={{ marginLeft: "50%" }}
+              mode="outlined"
+              onPress={() => navigation.goBack()}
+              style={{width: '50%', height: '100%'}}
+            >
+              <Ionicons name="arrow-back" size={24} color="green" />
+            </Button>
+            <Button
+              style={{width: '50%', height: '100%'}}
               mode="outlined"
               color="green"
               onPress={() => {
@@ -207,14 +211,14 @@ function FaseCarboidrati({ navigation }: GenericNavProps<"Fasi">) {
                     })
                   );
                 });
-                navigation.navigate("FaseProteine", {
+                navigation.navigate("FaseGrassi", {
                   restaurantName: currentOrderRestaurantName,
                 });
               }}
             >
               <Ionicons name="arrow-forward" size={24} color="green" />
             </Button>
-          </Card.Content>
+          </Card.Actions>
         </Card>
       </ScrollView>
     );
@@ -226,26 +230,4 @@ function FaseCarboidrati({ navigation }: GenericNavProps<"Fasi">) {
   );
 }
 
-const FasiStack = () => {
-  return (
-    <Stack.Navigator initialRouteName="Fasi">
-      <Stack.Screen
-        name="Fasi"
-        options={{ headerShown: false }}
-        component={FaseCarboidrati}
-      />
-      <Stack.Screen
-        name="FaseProteine"
-        options={{ headerShown: false }}
-        component={FaseProteine}
-      />
-      <Stack.Screen
-        name="FaseGrassi"
-        options={{ headerShown: false }}
-        component={FaseGrassi}
-      />
-    </Stack.Navigator>
-  );
-};
-
-export default connect(null, mapDispatch)(FasiStack);
+export default connect(null, mapDispatch)(FaseProteine);

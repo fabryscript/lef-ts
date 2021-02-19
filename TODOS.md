@@ -2,9 +2,6 @@
 
 - Improve del menù e del riepilogo ordine
 - currentOrderRestaurantName deve funzionare nella action `navigation.navigate("Riepilogo", ...)`
-## Dev
-
-- Rivedi l'intera logica dell'ordine, dato che qui non operiamo più con "piatti" ma con singoli ingredienti, stacca la branch.
 
 # TODOS - Sito Web
 
