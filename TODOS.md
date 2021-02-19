@@ -1,7 +1,7 @@
 # TODOS - App
 
 - Improve del menù e del riepilogo ordine
-- currentOrderRestaurantName deve funzionare nella action `navigation.navigate("Riepilogo", ...)`
+- Quando si cambia ristorante, pulire lo store Redux per permettere il solo passaggio degli ingredienti del ristorante che viene selezionato
 
 # TODOS - Sito Web
 
