@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import {
-  GenericNavProps,
-} from "../../../paramlists/GenericStackParamList";
+import { GenericNavProps } from "../../../paramlists/GenericStackParamList";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
   addItemToCart,
@@ -80,21 +78,7 @@ function FaseProteine({ navigation }: GenericNavProps<"Fasi">) {
             <Title>
               €{price} - {name}
             </Title>
-            <Card.Actions style={{ flexDirection: "row-reverse" }}>
-              <Text>Quantità: {sliderQuantityValue[index].value} g.</Text>
-              <Slider
-                disabled={!isSwitchOn[index].value}
-                style={{ width: 200, height: 50 }}
-                minimumValue={10}
-                maximumValue={700}
-                value={sliderQuantityValue[index].value}
-                step={5}
-                minimumTrackTintColor="#36ff00"
-                maximumTrackTintColor="#000"
-                onValueChange={(value) =>
-                  onToggleSlider(value, ingrediente.quantity, index)
-                }
-              />
+            <Card.Actions>
               <Switch
                 color="green"
                 value={isSwitchOn[index].value}
@@ -102,6 +86,22 @@ function FaseProteine({ navigation }: GenericNavProps<"Fasi">) {
                   onToggleSwitch(value, ingrediente.name, index)
                 }
               />
+              <List.Accordion title="Modifica Quantità">
+                <Text>Quantità: {sliderQuantityValue[index].value} g.</Text>
+                <Slider
+                  disabled={!isSwitchOn[index].value}
+                  style={{ width: 200, height: 50 }}
+                  minimumValue={10}
+                  maximumValue={700}
+                  value={sliderQuantityValue[index].value}
+                  step={5}
+                  minimumTrackTintColor="#36ff00"
+                  maximumTrackTintColor="#000"
+                  onValueChange={(value) =>
+                    onToggleSlider(value, ingrediente.quantity, index)
+                  }
+                />
+              </List.Accordion>
             </Card.Actions>
           </Card.Content>
         </Card>
@@ -187,12 +187,12 @@ function FaseProteine({ navigation }: GenericNavProps<"Fasi">) {
             <Button
               mode="outlined"
               onPress={() => navigation.goBack()}
-              style={{width: '50%', height: '100%'}}
+              style={{ width: "50%", height: "100%" }}
             >
               <Ionicons name="arrow-back" size={24} color="green" />
             </Button>
             <Button
-              style={{width: '50%', height: '100%'}}
+              style={{ width: "50%", height: "100%" }}
               mode="outlined"
               color="green"
               onPress={() => {

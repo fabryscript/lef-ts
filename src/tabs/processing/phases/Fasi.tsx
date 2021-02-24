@@ -85,21 +85,7 @@ function FaseCarboidrati({ navigation }: GenericNavProps<"Fasi">) {
             <Title>
               €{price} - {name}
             </Title>
-            <Card.Actions style={{ flexDirection: "row-reverse" }}>
-              <Text>Quantità: {sliderQuantityValue[index].value} g.</Text>
-              <Slider
-                disabled={!isSwitchOn[index].value}
-                style={{ width: 200, height: 50 }}
-                minimumValue={10}
-                maximumValue={700}
-                value={sliderQuantityValue[index].value}
-                step={5}
-                minimumTrackTintColor="#36ff00"
-                maximumTrackTintColor="#000"
-                onValueChange={(value) =>
-                  onToggleSlider(value, ingrediente.quantity, index)
-                }
-              />
+            <Card.Actions>
               <Switch
                 color="green"
                 value={isSwitchOn[index].value}
@@ -107,6 +93,22 @@ function FaseCarboidrati({ navigation }: GenericNavProps<"Fasi">) {
                   onToggleSwitch(value, ingrediente.name, index)
                 }
               />
+              <List.Accordion title="Modifica Quantità">
+                <Text>Quantità: {sliderQuantityValue[index].value} g.</Text>
+                <Slider
+                  disabled={!isSwitchOn[index].value}
+                  style={{ width: 200, height: 50 }}
+                  minimumValue={10}
+                  maximumValue={700}
+                  value={sliderQuantityValue[index].value}
+                  step={5}
+                  minimumTrackTintColor="#36ff00"
+                  maximumTrackTintColor="#000"
+                  onValueChange={(value) =>
+                    onToggleSlider(value, ingrediente.quantity, index)
+                  }
+                />
+              </List.Accordion>
             </Card.Actions>
           </Card.Content>
         </Card>
