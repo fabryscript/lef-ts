@@ -7503,10 +7503,10 @@ react-dom@16.13.1:
     prop-types "^15.6.2"
     scheduler "^0.19.1"
 
-react-firebase-hooks@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/react-firebase-hooks/-/react-firebase-hooks-2.2.0.tgz#a2cea46d3da94619e8a316b85173638698ef7d2b"
-  integrity sha512-bwBaCYa8M+bpTqD0masAPGDTzxiTkGbyxv363hyR+NeNH1HbezPll6G7aMIGl+7OOYRPzfdmpkk72zc3VgXfEw==
+react-firebase-hooks@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-firebase-hooks/-/react-firebase-hooks-3.0.1.tgz#dd37060beed7a95ad0a426226dc57b581c80a377"
+  integrity sha512-ahSULtc7GNPPCf7pQrryBgk2tQjc1Gw7+xNOaCMjDy9Qq/iXEDaxy+XNlt8PEUab64ofHs9eivczDyjFMGf2QQ==
 
 react-hook-form@^6.15.4:
   version "6.15.4"
