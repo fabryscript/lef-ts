@@ -9,10 +9,10 @@ const slice = createSlice({
   },
   reducers: {
     addItemToCart: (items: any, action) => {
-      const { name, amount, quantity } = action.payload;
+      const { name, price, quantity } = action.payload;
       items.cart.push({
         name,
-        amount,
+        price,
         quantity
       });
     },

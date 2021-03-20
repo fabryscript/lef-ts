@@ -14,10 +14,13 @@ const slice = createSlice({
         });
       }
     },
+    removeAllIngredients: (ingredients: any) => {
+      ingredients.length = 0;
+    }
   },
 });
 
-export const { addIngredients } = slice.actions;
+export const { addIngredients, removeAllIngredients } = slice.actions;
 
 export default slice.reducer;
 

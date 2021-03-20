@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useState } from "react";
-import { View } from "react-native";
-import { Banner, Button, Card, TextInput, Title } from "react-native-paper";
+import { ScrollView } from "react-native";
+import { Banner, Button, Card, TextInput } from "react-native-paper";
 import InsertProcess from "../additionalData/InsertProcess";
 import { AuthParamList, AuthNavProps } from "../paramlists/AuthParamList";
 import { auth } from "./firebase";
@@ -29,7 +29,7 @@ function Login({ navigation }: AuthNavProps<"Login">) {
   };
 
   return (
-    <View>
+    <ScrollView>
       <Banner
         visible={credentialsNotFoundBadgeVisible}
         actions={[
@@ -43,37 +43,40 @@ function Login({ navigation }: AuthNavProps<"Login">) {
         Ahia! Non abbiamo trovato un account con quelle credenziali, ti spiace
         riprovare?
       </Banner>
-      <Card>
+      <Card style={{marginTop: "10%"}}>
+        <Card.Cover source={{uri: "https://firebasestorage.googleapis.com/v0/b/letsfitja-eatfit.appspot.com/o/logo%2Flogo.png?alt=media&token=9f165af0-1622-4308-8ed1-0a149195f4f5"}} />
         <Card.Content>
-          <Title style={{fontSize: 12, fontStyle: 'italic'}}>Assicurati di aver verificato l'email!</Title>
           <TextInput
             label="Email"
             autoFocus
             value={emailText}
             onChangeText={(text) => setEmailText(text)}
+            style={{marginTop: "10%"}}
           />
           <TextInput
             label="Password"
             secureTextEntry
             value={passwordText}
+            style={{marginTop: "3%"}}
             onChangeText={(text) => setPasswordText(text)}
           />
           <Button
             icon="arrow-collapse-right"
             mode="outlined"
             onPress={handleLogIn}
+            style={{marginTop: "10%", borderRadius: 20}}
           >
             Log In
           </Button>
           <Button onPress={() => navigation.navigate("Registrazione")}>
-            Non sei registrato? Cliccami!
+            Non hai un account? Cliccami!
           </Button>
           <Button onPress={() => navigation.navigate("PasswordReset")}>
             Password Dimenticata? Cliccami!
           </Button>
         </Card.Content>
       </Card>
-    </View>
+    </ScrollView>
   );
 }
 

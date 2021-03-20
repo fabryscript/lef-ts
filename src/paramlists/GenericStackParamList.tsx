@@ -11,21 +11,23 @@ export type GenericStackParamList = {
         restaurantName?: string,
         piatti?: plate[],
     },
-    Fasi: any,
-    FaseCarboidrati: {
-        restaurantName?: string,
-        allIngredients?: plate[]
-    }
-    FaseGrassi: any,
-    FaseProteine: any,
+    Fasi: {
+        restaurantName?: string
+    },
+    FaseGrassi: {
+        restaurantName?: string
+    },
+    FaseProteine: {
+        restaurantName?: string
+    },
     Riepilogo: {
         restaurantName?: string,
-        amount?: number,
+        price?: number,
         allIngredients?: plate[]
     },
     OrderDetails: {
         restaurantName?: string,
-        amount?: number,
+        price?: number,
         allIngredients?: plate[],
         method?: string,
         orderID?: string

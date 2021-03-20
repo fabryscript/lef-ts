@@ -23,8 +23,8 @@ function OrdiniRecenti({
             // id è + 1 poichè array index always starts at 0
             const { allIngredients, totale, paymentMethod, restaurantName } = order;
             return (
-              <>
-                <Card key={id}>
+              <React.Fragment key={id}>
+                <Card>
                   <Card.Content>
                     <Title>Ordine #{id + 1}</Title>
                     <Title>{restaurantName}</Title>
@@ -34,7 +34,7 @@ function OrdiniRecenti({
                       onPress={() =>
                         navigation.navigate("OrderDetails", {
                           allIngredients,
-                          amount: totale,
+                          price: totale,
                           method: paymentMethod,
                           orderID: `Ordine #${id + 1}`,
                           restaurantName,
@@ -45,7 +45,7 @@ function OrdiniRecenti({
                     </Button>
                   </Card.Actions>
                 </Card>
-              </>
+              </React.Fragment>
             );
           } else {
             // ...

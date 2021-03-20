@@ -3,230 +3,154 @@ import { GenericNavProps } from "../../../paramlists/GenericStackParamList";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
   addItemToCart,
-  getCurrentOrderRestaurantName,
   updateTotal,
 } from "../../../store/cartSlice";
-import { Ionicons } from "@expo/vector-icons";
-import { Switch, ScrollView } from "react-native";
-import { Card, Appbar, Title, List, Text, Button } from "react-native-paper";
-import { plate } from "../../../models";
+import { ScrollView, View } from "react-native";
+import { Card, Title, List, Text, Button } from "react-native-paper";
 import { getCurrentIngredients } from "../../../store/ingredientsSlice";
-import IngredientInfosCard from "../ingredient-infos/IngredientInfosCard";
-import IngredientNameCard from "../ingredient-infos/IngredientNameCard";
-import TotalMacronutsDetailsCard from "../ingredient-infos/TotalMacronutsDetailsCard";
 import Slider from "@react-native-community/slider";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import Toast from "react-native-toast-message";
 
 const mapDispatch = { addItemToCart };
-const genericCardMargin = { marginTop: "1%" };
 
-function FaseProteine({ navigation }: GenericNavProps<"Fasi">) {
-  const allIngredients = useSelector(getCurrentIngredients);
-  const currentOrderRestaurantName = useSelector(getCurrentOrderRestaurantName);
+function FaseProteine({ navigation }: GenericNavProps<"FaseProteine">) {
+  const ingredients = useSelector(getCurrentIngredients);
 
-  let plates: {} | null | undefined = [];
   const dispatch = useDispatch();
 
-  const mappedIngredients = allIngredients.map((ingredient) => ingredient);
-
-  const filteredByPhaseIngredients = mappedIngredients.filter(
-    (ingredient) => ingredient.name.phase === "proteine"
+  const filteredByPhaseIngredients = ingredients.filter(
+    (ingredient: any) => ingredient.name.phase === "proteine"
   );
 
-  if (filteredByPhaseIngredients) {
-    const [isSwitchOn, setIsSwitchOn] = useState<any[]>(
-      filteredByPhaseIngredients.map((piatto) => ({
-        value: false,
-        ...piatto,
-      }))
+  const [sliderQuantityValue, setSliderQuantityValue] = useState<any[]>(
+    filteredByPhaseIngredients.map((ingredient: any) => ({
+      value: 100,
+      finalPrice: ingredient.name.price,
+      ...ingredient,
+    }))
+  );
+
+
+  const onToggleSlider = (
+    value: number,
+    ingredient: any,
+    finalPrice: number,
+    id: number
+  ) => {
+    const temp = [...sliderQuantityValue];
+    temp.splice(id, 1, {
+      value,
+      finalPrice,
+      ...ingredient,
+    });
+    setSliderQuantityValue(temp);
+  };
+
+  let totale= 0;
+
+  const addIngredientToCart = (
+    ingredient: any,
+    finalPrice: number,
+    quantity: number
+  ) => {
+    const { name } = ingredient;
+    totale += finalPrice;
+    dispatch(
+      addItemToCart({
+        name,
+        price: finalPrice,
+        quantity,
+      })
     );
-    const [sliderQuantityValue, setSliderQuantityValue] = useState<any[]>(
-      filteredByPhaseIngredients.map((ingredient) => ({
-        value: 100,
-        ...ingredient,
-      }))
+    Toast.show({
+      type: "success",
+      position: "top",
+      autoHide: true,
+      text1: "Perfetto! Elemento Aggiunto al carrello!",
+    })
+    return dispatch(
+      updateTotal({
+        totale,
+      })
     );
-
-    const onToggleSwitch = (
-      value: boolean,
-      piatto: plate | undefined,
-      index: number
-    ) => {
-      const temp = [...isSwitchOn];
-      temp.splice(index, 1, {
-        value,
-        ...piatto,
-      });
-      setIsSwitchOn(temp);
-    };
-
-    const onToggleSlider = (value: number, ingrediente: any, index: number) => {
-      const temp = [...sliderQuantityValue];
-      temp.splice(index, 1, {
-        value,
-        ...ingrediente,
-      });
-      setSliderQuantityValue(temp);
-    };
-
-    const checkedPlatesObj = isSwitchOn.filter((el: any) => el.value);
-
-    plates = filteredByPhaseIngredients.map((ingrediente, index) => {
-      const { price, name } = ingrediente.name;
-      return (
-        <Card style={genericCardMargin} key={index}>
-          <Card.Content>
-            <Title>
-              €{price} - {name}
-            </Title>
-            <Card.Actions>
-              <Switch
-                color="green"
-                value={isSwitchOn[index].value}
-                onValueChange={(value) =>
-                  onToggleSwitch(value, ingrediente.name, index)
-                }
-              />
-              <List.Accordion title="Modifica Quantità">
-                <Text>Quantità: {sliderQuantityValue[index].value} g.</Text>
+  };
+  return (
+    <ScrollView>
+      <Card>
+        <Card.Content>
+          <Title>Fonte Di Grassi</Title>
+        </Card.Content>
+      </Card>
+      {filteredByPhaseIngredients.map((ingredient: any, id: number) => {
+        const { name, price, imageURI } = ingredient.name;
+        const {
+          calorie,
+          proteine,
+          carboidrati,
+          grassi,
+        } = ingredient.name.macronut;
+        return (
+        <Card key={id} style={{padding: "2% 2% 2% 2%"}}>
+            <Card.Cover source={{uri: imageURI}} />
+            <Card.Content>
+              <Title>
+                {" "}
+                {name} | €
+                {((sliderQuantityValue[id].value * price) / 100).toFixed(1)}
+              </Title>
+            <List.Accordion title="Modifica Quantità">
+              <View style={{marginLeft: "2%"}}>
                 <Slider
-                  disabled={!isSwitchOn[index].value}
-                  style={{ width: 200, height: 50 }}
-                  minimumValue={10}
-                  maximumValue={700}
-                  value={sliderQuantityValue[index].value}
-                  step={5}
+                  value={sliderQuantityValue[id].value}
+                  minimumValue={50}
+                  maximumValue={200}
+                  step={25}
+                  style={{width: "75%"}}
                   minimumTrackTintColor="#36ff00"
                   maximumTrackTintColor="#000"
-                  onValueChange={(value) =>
-                    onToggleSlider(value, ingrediente.quantity, index)
-                  }
-                />
-              </List.Accordion>
+                  onValueChange={(value) =>{
+                    onToggleSlider(value, ingredient, (price * sliderQuantityValue[id].value) /100, id)
+                  }}
+                  />
+                  <Text>{sliderQuantityValue[id].value}g selezionati</Text>
+              </View>
+            </List.Accordion>
+            <List.Accordion title="Macronutrienti">
+              <View style={{padding: "4% 4% 4% 4%"}}>
+                <Title>Calorie: {calorie} kCal</Title>
+                <Text>Carboidrati: {carboidrati} g</Text>
+                <Text>Proteine: {proteine} g</Text>
+                <Text>Grassi: {grassi} g</Text>
+              </View>
+            </List.Accordion>
+            </Card.Content>
+            <Card.Actions>
+              <Button onPress={() =>
+                addIngredientToCart(
+                  ingredient,
+                  sliderQuantityValue[id].finalPrice,
+                  sliderQuantityValue[id].value,
+                )
+              }>
+                <FontAwesome name="cart-plus" size={24} color="green" />
+                <Text style={{color: "green"}}> Aggiungi al carrello</Text>
+              </Button>
             </Card.Actions>
-          </Card.Content>
-        </Card>
-      );
-    });
-
-    let totale = 0;
-
-    const checkedPlates = checkedPlatesObj.map((plate: any, index: number) => {
-      const { name, price } = plate;
-      totale += price;
-      return <IngredientNameCard key={index} name={name} />;
-    });
-
-    let totaleCalorie = 0;
-    let totaleProteine = 0;
-    let totaleCarbodrati = 0;
-    let totaleGrassi = 0;
-
-    const cardForMacros = checkedPlatesObj.map((plate: any, index: number) => {
-      const { calorie, proteine, carboidrati, grassi } = plate.macronut;
-
-      totaleCalorie += (calorie * sliderQuantityValue[index].value) / 100;
-      totaleProteine += (proteine * sliderQuantityValue[index].value) / 100;
-      totaleCarbodrati +=
-        (carboidrati * sliderQuantityValue[index].value) / 100;
-      totaleGrassi += (grassi * sliderQuantityValue[index].value) / 100;
-
-      return (
-        <IngredientInfosCard
-          key={index}
-          name={plate.name}
-          /**
-           * Se comunque consideriamo che il valore (di base) è 100g.
-           */
-          calorie={(calorie * sliderQuantityValue[index].value) / 100}
-          carboidrati={(carboidrati * sliderQuantityValue[index].value) / 100}
-          grassi={(grassi * sliderQuantityValue[index].value) / 100}
-          proteine={(proteine * sliderQuantityValue[index].value) / 100}
-          quantity={sliderQuantityValue[index].value}
-        />
-      );
-    });
-
-    return (
-      <ScrollView>
-        <Appbar>
-          <Appbar.Header>
-            <Title>Fonte di Proteine</Title>
-          </Appbar.Header>
-        </Appbar>
-        <Card style={genericCardMargin}>
-          <Card.Content>
-            <Title>Ingredienti Disponibili</Title>
-          </Card.Content>
-        </Card>
-        {plates}
-        <Card style={genericCardMargin}>
-          <Card.Content>
-            <Title>Riepilogo Ordine:</Title>
-          </Card.Content>
-        </Card>
-        {checkedPlates}
-        <Card style={genericCardMargin}>
-          <Card.Content>
-            <Title>Totale: €{totale}</Title>
-            <Title>Totale Calorie: {totaleCalorie} kCal</Title>
-            <Text style={{ fontStyle: "italic" }}>
-              su 2440 del tuo tetto giornaliero
-            </Text>
-            <List.Accordion title="Informazioni sui piatti selezionati">
-              {cardForMacros}
-            </List.Accordion>
-            <List.Accordion title="Macronutrienti totali">
-              <TotalMacronutsDetailsCard
-                carboidrati={totaleCarbodrati}
-                proteine={totaleProteine}
-                grassi={totaleGrassi}
-              />
-            </List.Accordion>
-          </Card.Content>
-          <Card.Actions>
-            <Button
-              mode="outlined"
-              onPress={() => navigation.goBack()}
-              style={{ width: "50%", height: "100%" }}
-            >
-              <Ionicons name="arrow-back" size={24} color="green" />
-            </Button>
-            <Button
-              style={{ width: "50%", height: "100%" }}
-              mode="outlined"
-              color="green"
-              onPress={() => {
-                checkedPlatesObj.map((plate, _id) => {
-                  const { name, price } = plate;
-                  dispatch(
-                    addItemToCart({
-                      name,
-                      amount: price,
-                      quantity: sliderQuantityValue[_id].value,
-                    })
-                  );
-                  dispatch(
-                    updateTotal({
-                      totale,
-                    })
-                  );
-                });
-                navigation.navigate("FaseGrassi", {
-                  restaurantName: currentOrderRestaurantName,
-                });
-              }}
-            >
-              <Ionicons name="arrow-forward" size={24} color="green" />
-            </Button>
-          </Card.Actions>
-        </Card>
-      </ScrollView>
-    );
-  }
-  return (
-    <Card>
-      <Card.Content>Qui non c'è nulla :(</Card.Content>
-    </Card>
+          </Card>
+        );
+      })}
+      <Card>
+        <Card.Actions>
+          <Button mode="outlined" style={{width: "50%", height: "100%"}} onPress={() => navigation.goBack()}>
+            <AntDesign name="arrowleft" size={24} color="green" />
+          </Button>
+          <Button mode="outlined" style={{width: "50%", height: "100%"}} onPress={() => navigation.navigate("FaseGrassi")}>
+            <AntDesign name="arrowright" size={24} color="green" />
+          </Button>
+        </Card.Actions>
+      </Card>
+    </ScrollView>
   );
 }
 

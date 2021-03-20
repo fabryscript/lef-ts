@@ -8,10 +8,11 @@ import {
   Provider,
   Portal,
   Appbar,
+  Chip,
 } from "react-native-paper";
 import { connect, useDispatch } from "react-redux";
 import { GenericNavProps } from "../../paramlists/GenericStackParamList";
-import { CombinedDarkTheme } from "../../Routes";
+import { CombinedDefaultTheme } from "../../Routes";
 import { updateRestaurantName } from "../../store/cartSlice";
 import { addIngredients } from "../../store/ingredientsSlice";
 
@@ -47,7 +48,7 @@ function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">) {
   }, [piatti]);
 
   return (
-    <Provider theme={CombinedDarkTheme}>
+    <Provider theme={CombinedDefaultTheme}>
       <ScrollView>
         <Appbar.Header>
           <Appbar.BackAction onPress={() => navigation.goBack()} />
@@ -61,14 +62,22 @@ function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">) {
 
         {
           piatti &&
-            piatti.map((plate, id) => (
-              <Card style={{marginTop: 10}} key={id}>
+            piatti.map((plate: any, id) => {
+              const { name, imageURI, price, vegan, vegetarian } = plate;
+              return (
+                <Card style={{marginTop: 10}} key={id}>
+                <Card.Cover source={{uri: imageURI}} />
                 <Card.Content>
-                  <Title>{plate.name}</Title>
-                  <Paragraph>€{plate.price}</Paragraph>
+                  <Title>{name}</Title>
+                  <Paragraph>€{price} </Paragraph>
                 </Card.Content>
+                <Card.Actions>
+                  { vegetarian && <Chip mode="outlined">Vegetariano</Chip> }
+                  { vegan && <Chip mode="outlined">Vegan</Chip> }
+                </Card.Actions>
               </Card>
-            ))
+              )
+            })
         }
 
         <Portal>
@@ -79,11 +88,6 @@ function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">) {
             open={open}
             icon={open ? "plus" : "plus"}
             actions={[
-              {
-                icon: "star",
-                label: "Aggiungi ai Piatti Preferiti",
-                onPress: () => console.log("Devi aggiungere nei preferiti"),
-              },
               {
                 icon: "plus",
                 label: "Nuovo ordine da questo ristorante",

@@ -4,6 +4,8 @@ import { UserProvider } from "./UserProvider";
 import { Provider as ReduxProvider } from "react-redux";
 import reducer from "./store/configureStore";
 import { configureStore } from "@reduxjs/toolkit";
+import Toast from "react-native-toast-message";
+
 interface ProvidersProps {}
 
 const store = configureStore({
@@ -15,6 +17,7 @@ export const Providers: React.FC<ProvidersProps> = ({}) => {
     <UserProvider>
       <ReduxProvider store={store}>
         <Routes />
+        <Toast position="top" ref={(ref) => Toast.setRef(ref)} />
       </ReduxProvider>
     </UserProvider>
   );

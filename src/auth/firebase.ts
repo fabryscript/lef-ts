@@ -1,4 +1,7 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+
 import {
   REACT_APP_FIREBASE_API_KEY,
   REACT_APP_FIREBASE_AUTH_DOMAIN,
@@ -8,7 +11,6 @@ import {
   REACT_APP_FIREBASE_PROJECT_ID,
   REACT_APP_FIREBASE_STORAGE_BUCKET,
 } from "@env";
-import { plate } from "../models";
 
 const firebaseConfig = {
   apiKey: REACT_APP_FIREBASE_API_KEY,
@@ -26,7 +28,6 @@ if (!firebase.apps.length) {
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
-export const storage = firebase.storage();
 
 export const executeRegistration = async (email: string, password: string) => {
   try {

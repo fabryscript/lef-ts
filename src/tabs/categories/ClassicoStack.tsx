@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { ScrollView } from "react-native";
-import { Searchbar, Card } from "react-native-paper";
+import { Card } from "react-native-paper";
 import { RestaurantCard } from "../../components/RestaurantCard";
-import images from "../../assets/images";
 import Ristorante from "../processing/Ristorante";
 import Fasi from "../processing/phases/Fasi";
 import { Riepilogo } from "../processing/Riepilogo";
@@ -15,6 +14,7 @@ import { firestore } from "../../auth/firebase";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { connect, useDispatch } from "react-redux";
 import { addItemToCart } from "../../store/cartSlice";
+import { removeAllIngredients } from "../../store/ingredientsSlice";
 
 interface ClassicoStackProps {}
 
@@ -22,27 +22,23 @@ const Stack = createStackNavigator<GenericStackParamList>();
 const mapDispatch = { addItemToCart };
 
 function Classico({ navigation }: GenericNavProps<"Classico">) {
-  const [searchQuery, setSearchQuery] = useState<string | any>();
-
-  const onChangeSearch = (query: React.SetStateAction<string| undefined>) =>
-    setSearchQuery(query);
 
   const classicoRestaurantsRef = firestore.collection("/classico-restaurants");
   const [classicoRestaurants] = useCollectionData(classicoRestaurantsRef);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(removeAllIngredients());
+  });
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      <Searchbar
-        placeholder="Cerca ristorante vicino a te"
-        onChangeText={onChangeSearch}
-        value={searchQuery}
-      />
       {
         classicoRestaurants &&
           classicoRestaurants.map((ristoranti: any, _index: number) => {
             return ristoranti.restaurants.map(
               (ristorante: any, index: number) => {
-                const {imageName, name, address, hourtime, plates} = ristorante;
+                const {imageURI, name, address, hourtime, plates, } = ristorante;
                 return (
                   <Card key={index}>
                     <RestaurantCard
@@ -56,7 +52,7 @@ function Classico({ navigation }: GenericNavProps<"Classico">) {
                         });
                       }}
                       btntext="esplora"
-                      imageName={images[imageName]}
+                      imageURI={imageURI}
                     />
                   </Card>
                 );

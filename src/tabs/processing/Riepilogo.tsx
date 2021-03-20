@@ -4,23 +4,23 @@ import {
   Card,
   Paragraph,
   Title,
-  Text,
   Button,
   Banner,
+  Text,
   Appbar
 } from "react-native-paper";
 import { GenericNavProps } from "../../paramlists/GenericStackParamList";
 import { addOrder, auth, timestamp } from "../../auth/firebase";
 import { useSelector } from "react-redux";
-import { getCurrentCartItems, getCurrentTotal } from "../../store/cartSlice";
+import { getCurrentCartItems, getCurrentOrderRestaurantName, getCurrentTotal } from "../../store/cartSlice";
 
 export function Riepilogo({route, navigation}: GenericNavProps<"Riepilogo">) {
-  const { restaurantName } = route.params;
   const [ showRecievedBadge, setShowRecievedBadge] = useState<boolean>(false);
   const [ showErrorBadge, setShowErrorBadge] = useState<boolean>(false);
 
   const cartItems = useSelector(getCurrentCartItems);
   const totale = useSelector(getCurrentTotal);
+  const restaurantName = useSelector(getCurrentOrderRestaurantName);
   const allIngredients = cartItems.map((item) => item);
 
   return (
@@ -58,16 +58,19 @@ export function Riepilogo({route, navigation}: GenericNavProps<"Riepilogo">) {
           <Card>
             {
               cartItems.map((item, id) => {
-                const {name, amount} = item;
+                const {name, price} = item.name;
                 return (
                   <React.Fragment key={id}>
-                    <Text>{name}</Text>
-                    <Text>€{amount}</Text>
-                    <Text>Totale: €{totale}</Text>
+                    <Card.Content>
+                      <Title>{name} | €{price}</Title>
+                    </Card.Content>
                   </React.Fragment>
                 )
               })
             }
+            <Card.Content>
+              <Title>Totale €{totale}</Title>
+            </Card.Content>
           </Card>
           </Paragraph>
           <Title>Vuoi confermare l'ordine?</Title>
