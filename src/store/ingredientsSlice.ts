@@ -5,18 +5,28 @@ const slice = createSlice({
   initialState: [],
   reducers: {
     addIngredients: (ingredients: any, action) => {
-      const { ingredientName } = action.payload;
-      if (ingredients.includes(ingredients.name === ingredientName.name)) {
-        return;
-      } else {
-        ingredients.push({
-          name: ingredientName,
-        });
-      }
+      const {
+        name,
+        price,
+        vegan,
+        vegetarian,
+        imageURI,
+        phase,
+        macronut,
+      } = action.payload;
+      ingredients.push({
+        name,
+        price,
+        vegan,
+        vegetarian,
+        imageURI,
+        phase,
+        macronut,
+      });
     },
     removeAllIngredients: (ingredients: any) => {
       ingredients.length = 0;
-    }
+    },
   },
 });
 

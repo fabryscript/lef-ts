@@ -20,13 +20,13 @@ function FaseProteine({ navigation }: GenericNavProps<"FaseProteine">) {
   const dispatch = useDispatch();
 
   const filteredByPhaseIngredients = ingredients.filter(
-    (ingredient: any) => ingredient.name.phase === "proteine"
+    (ingredient: any) => ingredient.phase === "proteine"
   );
 
   const [sliderQuantityValue, setSliderQuantityValue] = useState<any[]>(
     filteredByPhaseIngredients.map((ingredient: any) => ({
       value: 100,
-      finalPrice: ingredient.name.price,
+      finalPrice: ingredient.price,
       ...ingredient,
     }))
   );
@@ -55,6 +55,7 @@ function FaseProteine({ navigation }: GenericNavProps<"FaseProteine">) {
     quantity: number
   ) => {
     const { name } = ingredient;
+    totale = 0;
     totale += finalPrice;
     dispatch(
       addItemToCart({
@@ -83,13 +84,13 @@ function FaseProteine({ navigation }: GenericNavProps<"FaseProteine">) {
         </Card.Content>
       </Card>
       {filteredByPhaseIngredients.map((ingredient: any, id: number) => {
-        const { name, price, imageURI } = ingredient.name;
+        const { name, price, imageURI } = ingredient;
         const {
           calorie,
           proteine,
           carboidrati,
           grassi,
-        } = ingredient.name.macronut;
+        } = ingredient.macronut;
         return (
         <Card key={id} style={{padding: "2% 2% 2% 2%"}}>
             <Card.Cover source={{uri: imageURI}} />

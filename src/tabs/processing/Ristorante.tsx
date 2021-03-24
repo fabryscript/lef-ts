@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ScrollView } from "react-native";
 import {
   Card,
@@ -16,36 +16,46 @@ import { CombinedDefaultTheme } from "../../Routes";
 import { updateRestaurantName } from "../../store/cartSlice";
 import { addIngredients } from "../../store/ingredientsSlice";
 
-const mapDispatch = {addIngredients};
+const mapDispatch = { addIngredients };
 
 function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">) {
- const [state, setState] = useState({ open: false });
- const onStateChange = ({ open }: { open: any; }) => setState({ open });
- const { open } = state;
- const { piatti, restaurantName } = route.params;
+  const [state, setState] = useState({ open: false });
+  const onStateChange = ({ open }: { open: any }) => setState({ open });
+  const { open } = state;
+  const { piatti, restaurantName } = route.params;
 
- const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
- const transitionToFasi = () => {
-  dispatch(
-    updateRestaurantName({
-      restaurantName
-    })
-  )
-  navigation.navigate("Fasi");
- }
-  // Questo useEffect() serve per mettere nello store gli ingredienti del ristorante corrente
-  // che sta venendo selezionato
-
-  useEffect(() => {
-    piatti?.forEach((ingredientName, _id) => {
+  const transitionToFasi = () => {
+    piatti?.forEach((ingredient: any, _id) => {
+      const {
+        name,
+        price,
+        vegan,
+        vegetarian,
+        imageURI,
+        phase,
+        macronut,
+      } = ingredient;
       dispatch(
         addIngredients({
-          ingredientName
+          name,
+          price,
+          vegan,
+          vegetarian,
+          imageURI,
+          phase,
+          macronut,
         })
       );
     });
-  }, [piatti]);
+    dispatch(
+      updateRestaurantName({
+        restaurantName,
+      })
+    );
+    navigation.navigate("Fasi", {});
+  };
 
   return (
     <Provider theme={CombinedDefaultTheme}>
@@ -60,30 +70,28 @@ function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">) {
           </Card.Content>
         </Card>
 
-        {
-          piatti &&
-            piatti.map((plate: any, id) => {
-              const { name, imageURI, price, vegan, vegetarian } = plate;
-              return (
-                <Card style={{marginTop: 10}} key={id}>
-                <Card.Cover source={{uri: imageURI}} />
+        {piatti &&
+          piatti.map((plate: any, id) => {
+            const { name, imageURI, price, vegan, vegetarian } = plate;
+            return (
+              <Card style={{ marginTop: 10 }} key={id}>
+                <Card.Cover source={{ uri: imageURI }} />
                 <Card.Content>
                   <Title>{name}</Title>
                   <Paragraph>€{price} </Paragraph>
                 </Card.Content>
                 <Card.Actions>
-                  { vegetarian && <Chip mode="outlined">Vegetariano</Chip> }
-                  { vegan && <Chip mode="outlined">Vegan</Chip> }
+                  {vegetarian && <Chip mode="outlined">Vegetariano</Chip>}
+                  {vegan && <Chip mode="outlined">Vegan</Chip>}
                 </Card.Actions>
               </Card>
-              )
-            })
-        }
+            );
+          })}
 
         <Portal>
           <FAB.Group
             visible={true}
-            fabStyle={{backgroundColor: "#e3e5e3"}}
+            fabStyle={{ backgroundColor: "#e3e5e3" }}
             color="#000000"
             open={open}
             icon={open ? "plus" : "plus"}
@@ -94,11 +102,12 @@ function Ristorante({ route, navigation }: GenericNavProps<"Ristorante">) {
                 onPress: () => transitionToFasi(),
               },
             ]}
-            onStateChange={onStateChange} />
+            onStateChange={onStateChange}
+          />
         </Portal>
       </ScrollView>
     </Provider>
   );
 }
 
-export default connect(null, mapDispatch)(Ristorante)
+export default connect(null, mapDispatch)(Ristorante);

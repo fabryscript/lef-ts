@@ -1,6 +1,5 @@
 import { RouteProp } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
-import { plate } from "../models/plate"
 
 export type GenericStackParamList = {
     Classico: undefined,
@@ -9,7 +8,7 @@ export type GenericStackParamList = {
     OrdiniRecenti: undefined,
     Ristorante: {
         restaurantName?: string,
-        piatti?: plate[],
+        piatti?: any[],
     },
     Fasi: {
         restaurantName?: string
@@ -23,12 +22,12 @@ export type GenericStackParamList = {
     Riepilogo: {
         restaurantName?: string,
         price?: number,
-        allIngredients?: plate[]
+        allIngredients?: any[]
     },
     OrderDetails: {
         restaurantName?: string,
         price?: number,
-        allIngredients?: plate[],
+        allIngredients?: any[],
         method?: string,
         orderID?: string
     },

@@ -12,16 +12,16 @@ function OrdiniRecenti({
   navigation,
 }: GenericNavProps<"OrdiniRecenti">) {
   const ordersCollectionRef = firestore.collection("/orders");
-  const query = ordersCollectionRef.orderBy("createdAt").limit(100);
+  const query = ordersCollectionRef.orderBy("createdAt");
   const [orders] = useCollectionData(query);
+
+  const filteredOrders = orders?.filter((order: any) => order.user === auth.currentUser?.email)
 
   return (
     <ScrollView style={{ width: "100%" }}>
-      {orders &&
-        orders.map((order: any, id: number) => {
-          if (order.user === auth.currentUser?.email) {
-            // id è + 1 poichè array index always starts at 0
-            const { allIngredients, totale, paymentMethod, restaurantName } = order;
+      {filteredOrders &&
+        filteredOrders.map((order: any, id) => {
+          const { allIngredients, totale, paymentMethod, restaurantName } = order;
             return (
               <React.Fragment key={id}>
                 <Card>
@@ -46,11 +46,9 @@ function OrdiniRecenti({
                   </Card.Actions>
                 </Card>
               </React.Fragment>
-            );
-          } else {
-            // ...
-          }
-        })}
+            )
+        })
+      }
     </ScrollView>
   );
 }

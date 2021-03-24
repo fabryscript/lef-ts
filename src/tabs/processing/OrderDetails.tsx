@@ -15,8 +15,8 @@ const OrderDetails = ({ route }: GenericNavProps<"OrderDetails">) => {
           <Paragraph>Importo: €{price}</Paragraph>
           <Paragraph>Piatti ordinati:</Paragraph>
           {
-            allIngredients?.map((piatto, id) => {
-              const { name, price } = piatto.name;
+            allIngredients?.map((ingredient, id) => {
+              const { name, price } = ingredient;
               return (
                 <Paragraph key={id}>
                   {name} - €{price}

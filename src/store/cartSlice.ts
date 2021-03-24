@@ -19,17 +19,19 @@ const slice = createSlice({
     getCartItems: (items: any) => {
         return items.cart;
     },
-    removeItemFromCart: (items: any) => items.cart.pop(),
     updateTotal: (items: any, action) => {
         items.totale += action.payload.totale;
     },
     updateRestaurantName: (items: any, action) => {
       items.currentOrderRestaurantName = action.payload.restaurantName;
+    },
+    resetCart: (items: any) => {
+      items.cart.length = 0;
     }
   },
 });
 
-export const { addItemToCart, removeItemFromCart, getCartItems, updateTotal, updateRestaurantName } = slice.actions;
+export const { addItemToCart, resetCart, getCartItems, updateTotal, updateRestaurantName } = slice.actions;
 
 export default slice.reducer;
 
