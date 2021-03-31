@@ -9,11 +9,11 @@ import Toast from "react-native-toast-message";
 interface ProvidersProps {}
 
 const store = configureStore({
-  reducer
-})
+  reducer,
+});
 
 export const Providers: React.FC<ProvidersProps> = ({}) => {
-  return(
+  return (
     <UserProvider>
       <ReduxProvider store={store}>
         <Routes />

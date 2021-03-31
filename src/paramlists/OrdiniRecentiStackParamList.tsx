@@ -1,3 +1,3 @@
 export type OrdiniRecentiStackParamList = {
-    OrdiniRecenti: undefined
-}
+  OrdiniRecenti: undefined;
+};

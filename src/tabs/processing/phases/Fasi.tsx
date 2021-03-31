@@ -35,7 +35,6 @@ function FaseCarboidrati({ navigation }: GenericNavProps<"Fasi">) {
     }))
   );
 
-
   const onToggleSlider = (
     value: number,
     ingredient: any,
@@ -73,7 +72,7 @@ function FaseCarboidrati({ navigation }: GenericNavProps<"Fasi">) {
       position: "top",
       autoHide: true,
       text1: "Perfetto! Elemento Aggiunto al carrello!",
-    })
+    });
     return dispatch(
       updateTotal({
         totale,
@@ -89,57 +88,59 @@ function FaseCarboidrati({ navigation }: GenericNavProps<"Fasi">) {
       </Card>
       {filteredByPhaseIngredients.map((ingredient: any, id: number) => {
         const { name, price, imageURI } = ingredient;
-        const {
-          calorie,
-          proteine,
-          carboidrati,
-          grassi,
-        } = ingredient.macronut;
+        const { calorie, proteine, carboidrati, grassi } = ingredient.macronut;
         return (
-        <Card key={id} style={{padding: "2% 2% 2% 2%"}}>
-            <Card.Cover source={{uri: imageURI}} />
+          <Card key={id} style={{ padding: "2% 2% 2% 2%" }}>
+            <Card.Cover source={{ uri: imageURI }} />
             <Card.Content>
               <Title>
                 {" "}
                 {name} | €
                 {((sliderQuantityValue[id].value * price) / 100).toFixed(1)}
               </Title>
-            <List.Accordion title="Modifica Quantità">
-              <View style={{marginLeft: "2%"}}>
-                <Slider
-                  value={sliderQuantityValue[id].value}
-                  minimumValue={50}
-                  maximumValue={200}
-                  step={25}
-                  style={{width: "75%"}}
-                  minimumTrackTintColor="#36ff00"
-                  maximumTrackTintColor="#000"
-                  onValueChange={(value) =>{
-                    onToggleSlider(value, ingredient, (price * sliderQuantityValue[id].value) /100, id)
-                  }}
+              <List.Accordion title="Modifica Quantità">
+                <View style={{ marginLeft: "2%" }}>
+                  <Slider
+                    value={sliderQuantityValue[id].value}
+                    minimumValue={50}
+                    maximumValue={200}
+                    step={25}
+                    style={{ width: "75%" }}
+                    minimumTrackTintColor="#36ff00"
+                    maximumTrackTintColor="#000"
+                    onValueChange={(value) => {
+                      onToggleSlider(
+                        value,
+                        ingredient,
+                        (price * sliderQuantityValue[id].value) / 100,
+                        id
+                      );
+                    }}
                   />
                   <Text>{sliderQuantityValue[id].value}g selezionati</Text>
-              </View>
-            </List.Accordion>
-            <List.Accordion title="Macronutrienti">
-              <View style={{padding: "4% 4% 4% 4%"}}>
-                <Title>Calorie: {calorie} kCal</Title>
-                <Text>Carboidrati: {carboidrati} g</Text>
-                <Text>Proteine: {proteine} g</Text>
-                <Text>Grassi: {grassi} g</Text>
-              </View>
-            </List.Accordion>
+                </View>
+              </List.Accordion>
+              <List.Accordion title="Macronutrienti">
+                <View style={{ padding: "4% 4% 4% 4%" }}>
+                  <Title>Calorie: {calorie} kCal</Title>
+                  <Text>Carboidrati: {carboidrati} g</Text>
+                  <Text>Proteine: {proteine} g</Text>
+                  <Text>Grassi: {grassi} g</Text>
+                </View>
+              </List.Accordion>
             </Card.Content>
             <Card.Actions>
-              <Button onPress={() =>
-                addIngredientToCart(
-                  ingredient,
-                  sliderQuantityValue[id].finalPrice,
-                  sliderQuantityValue[id].value
-                )
-              }>
+              <Button
+                onPress={() =>
+                  addIngredientToCart(
+                    ingredient,
+                    sliderQuantityValue[id].finalPrice,
+                    sliderQuantityValue[id].value
+                  )
+                }
+              >
                 <FontAwesome name="cart-plus" size={24} color="green" />
-                <Text style={{color: "green"}}> Aggiungi al carrello</Text>
+                <Text style={{ color: "green" }}> Aggiungi al carrello</Text>
               </Button>
             </Card.Actions>
           </Card>
@@ -147,7 +148,11 @@ function FaseCarboidrati({ navigation }: GenericNavProps<"Fasi">) {
       })}
       <Card>
         <Card.Actions>
-          <Button mode="outlined" style={{width: "50%", height: "100%"}} onPress={() => navigation.navigate("FaseProteine")}>
+          <Button
+            mode="outlined"
+            style={{ width: "50%", height: "100%" }}
+            onPress={() => navigation.navigate("FaseProteine")}
+          >
             <AntDesign name="arrowright" size={24} color="green" />
           </Button>
         </Card.Actions>

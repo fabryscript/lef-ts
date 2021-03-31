@@ -8,47 +8,51 @@ import { GenericNavProps } from "../paramlists/GenericStackParamList";
 import OrderDetails from "./processing/OrderDetails";
 interface OrdiniRecentiStackProps {}
 
-function OrdiniRecenti({
-  navigation,
-}: GenericNavProps<"OrdiniRecenti">) {
+function OrdiniRecenti({ navigation }: GenericNavProps<"OrdiniRecenti">) {
   const ordersCollectionRef = firestore.collection("/orders");
   const query = ordersCollectionRef.orderBy("createdAt");
   const [orders] = useCollectionData(query);
 
-  const filteredOrders = orders?.filter((order: any) => order.user === auth.currentUser?.email)
+  const filteredOrders = orders?.filter(
+    (order: any) => order.user === auth.currentUser?.email
+  );
 
   return (
     <ScrollView style={{ width: "100%" }}>
       {filteredOrders &&
         filteredOrders.map((order: any, id) => {
-          const { allIngredients, totale, paymentMethod, restaurantName } = order;
-            return (
-              <React.Fragment key={id}>
-                <Card>
-                  <Card.Content>
-                    <Title>Ordine #{id + 1}</Title>
-                    <Title>{restaurantName}</Title>
-                  </Card.Content>
-                  <Card.Actions>
-                    <Button
-                      onPress={() =>
-                        navigation.navigate("OrderDetails", {
-                          allIngredients,
-                          price: totale,
-                          method: paymentMethod,
-                          orderID: `Ordine #${id + 1}`,
-                          restaurantName,
-                        })
-                      }
-                    >
-                      Dettagli Ordine
-                    </Button>
-                  </Card.Actions>
-                </Card>
-              </React.Fragment>
-            )
-        })
-      }
+          const {
+            allIngredients,
+            totale,
+            paymentMethod,
+            restaurantName,
+          } = order;
+          return (
+            <React.Fragment key={id}>
+              <Card>
+                <Card.Content>
+                  <Title>Ordine #{id + 1}</Title>
+                  <Title>{restaurantName}</Title>
+                </Card.Content>
+                <Card.Actions>
+                  <Button
+                    onPress={() =>
+                      navigation.navigate("OrderDetails", {
+                        allIngredients,
+                        price: totale,
+                        method: paymentMethod,
+                        orderID: `Ordine #${id + 1}`,
+                        restaurantName,
+                      })
+                    }
+                  >
+                    Dettagli Ordine
+                  </Button>
+                </Card.Actions>
+              </Card>
+            </React.Fragment>
+          );
+        })}
     </ScrollView>
   );
 }

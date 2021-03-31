@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { ScrollView, View, TextInput, TouchableOpacity, Text } from "react-native";
+import {
+  ScrollView,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 import { Title } from "react-native-paper";
 import Toast from "react-native-toast-message";
 import { AuthNavProps } from "../paramlists/AuthParamList";
@@ -16,13 +22,13 @@ function Register({ navigation }: AuthNavProps<"Registrazione">) {
     const resultOfPasswordValidation = validatePassword(passwordText!.trim());
     if (resultOfEmailValidation) {
       if (resultOfPasswordValidation) {
-        await executeRegistration(emailText!, passwordText!)
+        await executeRegistration(emailText!, passwordText!);
       } else {
         Toast.show({
           type: "error",
           text1: "Password del formato sbagliato",
           text2: "Deve essere maggiore di sei caratteri!",
-          autoHide: true
+          autoHide: true,
         });
       }
     } else {
@@ -30,9 +36,9 @@ function Register({ navigation }: AuthNavProps<"Registrazione">) {
         type: "error",
         text1: "L'email non è del formato corretto!",
         text2: "Esempio: bob@letsfitja.com",
-        autoHide: true
+        autoHide: true,
       });
-    };
+    }
     setEmailText("");
     setPasswordText("");
   };

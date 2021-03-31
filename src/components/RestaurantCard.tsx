@@ -7,7 +7,7 @@ interface RestaurantCardProps {
   btfn?: () => void;
   indirizzo?: string;
   orario?: string;
-  imageURI?: string
+  imageURI?: string;
 }
 
 export const RestaurantCard: React.FC<RestaurantCardProps> = ({
@@ -16,21 +16,25 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
   btfn,
   indirizzo,
   orario,
-  imageURI
+  imageURI,
 }) => {
   return (
     <View>
       <Card>
-        <Card.Cover source={{
-          uri: imageURI
-        }} />
+        <Card.Cover
+          source={{
+            uri: imageURI,
+          }}
+        />
         <Card.Content>
           <Title>{text}</Title>
           <Paragraph>{indirizzo}</Paragraph>
           <Paragraph>{orario}</Paragraph>
         </Card.Content>
         <Card.Actions>
-          <Button color="green" mode="outlined" onPress={btfn}>{btntext}</Button>
+          <Button color="green" mode="outlined" onPress={btfn}>
+            {btntext}
+          </Button>
         </Card.Actions>
       </Card>
     </View>

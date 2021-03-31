@@ -16,7 +16,10 @@ import merge from "deepmerge";
 
 interface RoutesProps {}
 
-export const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
+export const CombinedDefaultTheme = merge(
+  PaperDefaultTheme,
+  NavigationDefaultTheme
+);
 export const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 
 export const Routes: React.FC<RoutesProps> = () => {
@@ -25,7 +28,11 @@ export const Routes: React.FC<RoutesProps> = () => {
   return (
     <PaperProvider theme={CombinedDefaultTheme}>
       <NavigationContainer theme={CombinedDefaultTheme}>
-        { actualUser && actualUser.emailVerified === true ? <AppTabs /> : <AuthStack /> }
+        {actualUser && actualUser.emailVerified === true ? (
+          <AppTabs />
+        ) : (
+          <AuthStack />
+        )}
       </NavigationContainer>
     </PaperProvider>
   );

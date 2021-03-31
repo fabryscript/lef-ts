@@ -25,7 +25,10 @@ const PasswordReset: React.FC<PasswordResetProps> = ({}) => {
           onChangeText={(text) => setResetEmailText(text)}
           style={styles.fgPassInput}
         />
-        <TouchableOpacity style={styles.sumbitTouchableOpacity} onPress={handlePasswordReset}>
+        <TouchableOpacity
+          style={styles.sumbitTouchableOpacity}
+          onPress={handlePasswordReset}
+        >
           <Text>Invia</Text>
         </TouchableOpacity>
       </View>

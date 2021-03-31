@@ -10,8 +10,8 @@ const TopTabs = () => {
       initialRouteName="Classico"
       tabBarOptions={{
         labelStyle: {
-         fontStyle: "italic"
-        }
+          fontStyle: "italic",
+        },
       }}
     >
       <Tabs.Screen name="Classico" component={ClassicoStack} />

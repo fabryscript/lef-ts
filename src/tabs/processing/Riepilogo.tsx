@@ -1,12 +1,6 @@
 import React from "react";
 import { ScrollView } from "react-native";
-import {
-  Card,
-  Paragraph,
-  Title,
-  Button,
-  Appbar,
-} from "react-native-paper";
+import { Card, Paragraph, Title, Button, Appbar } from "react-native-paper";
 import { GenericNavProps } from "../../paramlists/GenericStackParamList";
 import { addOrder, auth, timestamp } from "../../auth/firebase";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,16 +25,16 @@ export function Riepilogo({ navigation }: GenericNavProps<"Riepilogo">) {
       type: "success",
       text1: "Ordine inviato con successo!",
       text2: "...ora dobbiamo solo aspettare!",
-      autoHide: true
+      autoHide: true,
     });
-  }
+  };
   const showOrderForwardErrorToast = () => {
     Toast.show({
       type: "error",
       text1: "Oh no, c'è stato un errore durante l'invio!",
-      autoHide: true
+      autoHide: true,
     });
-  }
+  };
   return (
     <ScrollView style={{ flex: 1, alignContent: "center" }}>
       <Appbar.Header>
@@ -83,14 +77,10 @@ export function Riepilogo({ navigation }: GenericNavProps<"Riepilogo">) {
                 .then((res) => {
                   res === true
                     ? showOrderForwardSuccessToast()
-                    : showOrderForwardErrorToast()
+                    : showOrderForwardErrorToast();
 
-                  dispatch(
-                    removeAllIngredients()
-                  )
-                  dispatch(
-                    resetCart()
-                  )
+                  dispatch(removeAllIngredients());
+                  dispatch(resetCart());
                 })
                 .finally(() => navigation.navigate("Classico"))
             }

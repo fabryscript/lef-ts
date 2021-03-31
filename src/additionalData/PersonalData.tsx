@@ -5,16 +5,14 @@ import firebase from "firebase";
 import { auth, firestore } from "../auth/firebase";
 
 const PersonalData = ({ navigation }: ImpostazioniNavProps<"Preferenze">) => {
-  const preferencesRef = firestore.collection("users").doc(`/${auth.currentUser?.uid}`);
+  const preferencesRef = firestore
+    .collection("users")
+    .doc(`/${auth.currentUser?.uid}`);
 
   preferencesRef.get().then((data) => {
     console.log(data);
-  })
-  return (
-    <View>
-
-    </View>
-  );
+  });
+  return <View></View>;
 };
 
 export default PersonalData;

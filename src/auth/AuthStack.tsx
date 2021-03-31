@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import {
-  ScrollView,
-  View,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
+import { ScrollView, View, TouchableOpacity, TextInput } from "react-native";
 import { Text, Title } from "react-native-paper";
 import InsertProcess from "../additionalData/InsertProcess";
 import { AuthParamList, AuthNavProps } from "../paramlists/AuthParamList";
@@ -59,11 +54,17 @@ function Login({ navigation }: AuthNavProps<"Login">) {
           >
             <Text>Login</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("PasswordReset")}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("PasswordReset")}
+          >
             <Text style={styles.forgotPassword}>Password Dimenticata?</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Registrazione")}>
-            <Text style={styles.forgotPassword}>Nuovo utente? Cliccami per registrarti!</Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Registrazione")}
+          >
+            <Text style={styles.forgotPassword}>
+              Nuovo utente? Cliccami per registrarti!
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

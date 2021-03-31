@@ -4,7 +4,13 @@ import { Card, Paragraph, Title } from "react-native-paper";
 import { GenericNavProps } from "../../paramlists/GenericStackParamList";
 
 const OrderDetails = ({ route }: GenericNavProps<"OrderDetails">) => {
-  const {orderID, restaurantName, method, price, allIngredients} = route.params;
+  const {
+    orderID,
+    restaurantName,
+    method,
+    price,
+    allIngredients,
+  } = route.params;
   return (
     <ScrollView>
       <Card>
@@ -14,16 +20,14 @@ const OrderDetails = ({ route }: GenericNavProps<"OrderDetails">) => {
           <Paragraph>Metodo di Pagamento: {method}</Paragraph>
           <Paragraph>Importo: €{price}</Paragraph>
           <Paragraph>Piatti ordinati:</Paragraph>
-          {
-            allIngredients?.map((ingredient, id) => {
-              const { name, price } = ingredient;
-              return (
-                <Paragraph key={id}>
-                  {name} - €{price}
-                </Paragraph>
-              );
-            })
-          }
+          {allIngredients?.map((ingredient, id) => {
+            const { name, price } = ingredient;
+            return (
+              <Paragraph key={id}>
+                {name} - €{price}
+              </Paragraph>
+            );
+          })}
         </Card.Content>
       </Card>
     </ScrollView>

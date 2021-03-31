@@ -12,7 +12,7 @@ interface ImpostazioniStackProps {}
 
 const handleSignOut = async () => {
   await auth.signOut();
-}
+};
 
 function Impostazioni({ navigation }: ImpostazioniNavProps<"Impostazioni">) {
   return (

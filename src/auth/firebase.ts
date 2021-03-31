@@ -30,36 +30,40 @@ if (!firebase.apps.length) {
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
-export const executeRegistration = async (email: string, password: string): Promise<string> => {
+export const executeRegistration = async (
+  email: string,
+  password: string
+): Promise<string> => {
   return new Promise<string>(async (resolve, reject) => {
     try {
-      await auth.createUserWithEmailAndPassword(email, password)
+      await auth
+        .createUserWithEmailAndPassword(email, password)
         .then((userCrediential) => {
           resolve(userCrediential.user?.email!);
           Toast.show({
             type: "success",
             text1: "Fatto! Account creato con successo!",
             text2: "Controlla l'email di verifica!",
-            autoHide: true
+            autoHide: true,
           });
         })
         .catch((error) => {
           console.log(error.code);
-          if(error.code === "auth/email-already-in-use") {
+          if (error.code === "auth/email-already-in-use") {
             Toast.show({
               type: "error",
               text1: "Questa email è già in uso",
               text2: "Account non creato.",
-              autoHide: true
+              autoHide: true,
             });
             return;
           }
           reject(error);
-        })
+        });
     } catch (error) {
       reject(error);
     }
-  })
+  });
 };
 
 export let timestamp = firebase.firestore.FieldValue.serverTimestamp();
@@ -128,7 +132,7 @@ export const passwordReset = async (email: string) => {
         type: "success",
         text1: "Email inviata con successo! ✅",
         text2: "...controlla anche lo spam!",
-        autoHide: true
+        autoHide: true,
       });
     })
     .catch((error) => {
@@ -136,14 +140,14 @@ export const passwordReset = async (email: string) => {
         Toast.show({
           type: "error",
           text1: "L'email non è in formato corretto! 💢",
-          autoHide: true
+          autoHide: true,
         });
       } else if (error.code === "auth/user-not-found") {
         Toast.show({
           type: "error",
           text1: "Utente non trovato!",
           text2: "(╯°□°）╯︵ ┻━┻",
-          autoHide: true
+          autoHide: true,
         });
       }
     });

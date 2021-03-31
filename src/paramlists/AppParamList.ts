@@ -1,5 +1,5 @@
 export type AppParamList = {
-    Ordina: undefined,
-    Impostazioni: undefined,
-    OrdiniRecenti: undefined
-}
+  Ordina: undefined;
+  Impostazioni: undefined;
+  OrdiniRecenti: undefined;
+};

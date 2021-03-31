@@ -1,1 +1,1 @@
-export * from './plate';
+export * from "./plate";

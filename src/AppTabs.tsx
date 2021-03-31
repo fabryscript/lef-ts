@@ -18,7 +18,9 @@ export const AppTabs: React.FC<AppTabsProps> = ({}) => {
           if (route.name === "Ordina")
             return <FontAwesome name="search" size={size} color={color} />;
           else if (route.name === "Impostazioni")
-              return <Ionicons name={"settings-outline"} size={size} color={color} />
+            return (
+              <Ionicons name={"settings-outline"} size={size} color={color} />
+            );
           else if (route.name === "OrdiniRecenti")
             return <AntDesign name="shoppingcart" size={size} color={color} />;
         },
@@ -29,7 +31,11 @@ export const AppTabs: React.FC<AppTabsProps> = ({}) => {
       }}
     >
       <Tabs.Screen name="Ordina" component={TopTabs} />
-      <Tabs.Screen name="OrdiniRecenti" options={{tabBarLabel: "Ordini Recenti"}} component={OrdiniRecentiStack} />
+      <Tabs.Screen
+        name="OrdiniRecenti"
+        options={{ tabBarLabel: "Ordini Recenti" }}
+        component={OrdiniRecentiStack}
+      />
       <Tabs.Screen name="Impostazioni" component={ImpostazioniStack} />
     </Tabs.Navigator>
   );

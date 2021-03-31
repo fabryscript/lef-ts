@@ -26,8 +26,8 @@ const TOS: React.FC<TOSProps> = () => {
             8-40121Bologna (BO).IlDPO (Data Protection Officer) è contattabile
             al seguenteindirizzo email:dpo@.orgPer eventuali richieste, è
             possibile contattare il Titolare tramite
-            postaraccomandataa/rall’indirizzo della sedelegale di-Via De’
-            Preti n. 8- 40121 Bologna,oppure tramite e-mail
+            postaraccomandataa/rall’indirizzo della sedelegale di-Via De’ Preti
+            n. 8- 40121 Bologna,oppure tramite e-mail
             all’indirizzo:privacy@.org2.Categorie di dati trattatiPer il
             perseguimento delle finalità di seguito descritte, il Titolare
             tratta le seguenti categorie di dati personali aLei riferibili: DATI
@@ -36,43 +36,42 @@ const TOS: React.FC<TOSProps> = () => {
             VIAFAX,EMAIL E PEC.Si precisa che, neltrasmettere dati(anche
             particolari-sensibili)ed informazioni relativi a terzi per
             l’istruzionedelle pratiche mediante i canali istituzionalidi
-            ,l’utente-dichiarante, con l’attivazione delle
-            propriecredenziali e la compilazione dei moduli, garantisce la
-            veridicità dei dati conferiti, nonché di aver ricevuto idoneadelega
-            ad operare (o comunque diessere un soggetto legittimato);
-            viepiù, non è tenuto ad adempiere agliobblighi informativi e di
-            eventuale acquisizione del consensoche siano di competenza degli
-            specifici Titolari deltrattamento dei dati (es. imprese).3.Finalità
-            e base giuridicadel trattamentoI trattamenti dei Suoi dati personali
-            avverrannosolamente per consentire il Suo accesso ai canali
-            istituzionali perla gestione delle pratiche e
-            delleprestazionirichieste,nonchéper finalità di archiviazione e per
-            adempiere a tuttigli obblighi normativi derivanti dal rapporto
-            instaurato.La base giuridica del trattamento, che ne attesta la
-            liceità,è quella prevista dall’art. 6, par. 1, letteraf) del
-            GDPR,ovveroil perseguimento del legittimo interesse del Titolare
-            alla corretta e trasparente gestione delle attivitàistituzionalmente
-            svolte nel contesto della Bilateralità Artigiana e, eventualmente,
-            anche alla tutela dei propridiritti derivanti dalle stesse. Il
-            trattamentopotrà altresì basarsi su obblighi legaliai quali è
-            soggetto il Titolareaisensi dell’art. 6, par. 1, lettera c) del
-            GDPR.4.Natura del conferimento dei dati e conseguenze del rifiutoIl
-            conferimento dei datipersonali è obbligatorio perprocedere alla
-            registrazione sul portale   e perconseguire l’operatività sul
-            medesimo ai fini della gestione delle pratiche.Pertanto,ilrifiuto di
-            conferimento,parziale o totale, comporterà
-            l’impossibilitàperl’interessato a svolgere le attività disponibili
-            sul portale.5.Modalità del trattamentoIl trattamento è realizzato
-            per mezzo delle operazioni o complesso di operazioni indicate
-            all’art. 4 comma 1 lett.a) Codice Privacy e art. 4 n. 2) GDPR,
-            ovvero, a titolo esemplificativo: raccolta, registrazione,
+            ,l’utente-dichiarante, con l’attivazione delle propriecredenziali e
+            la compilazione dei moduli, garantisce la veridicità dei dati
+            conferiti, nonché di aver ricevuto idoneadelega ad operare (o
+            comunque diessere un soggetto legittimato); viepiù, non è tenuto ad
+            adempiere agliobblighi informativi e di eventuale acquisizione del
+            consensoche siano di competenza degli specifici Titolari
+            deltrattamento dei dati (es. imprese).3.Finalità e base giuridicadel
+            trattamentoI trattamenti dei Suoi dati personali avverrannosolamente
+            per consentire il Suo accesso ai canali istituzionali perla gestione
+            delle pratiche e delleprestazionirichieste,nonchéper finalità di
+            archiviazione e per adempiere a tuttigli obblighi normativi
+            derivanti dal rapporto instaurato.La base giuridica del trattamento,
+            che ne attesta la liceità,è quella prevista dall’art. 6, par. 1,
+            letteraf) del GDPR,ovveroil perseguimento del legittimo interesse
+            del Titolare alla corretta e trasparente gestione delle
+            attivitàistituzionalmente svolte nel contesto della Bilateralità
+            Artigiana e, eventualmente, anche alla tutela dei propridiritti
+            derivanti dalle stesse. Il trattamentopotrà altresì basarsi su
+            obblighi legaliai quali è soggetto il Titolareaisensi dell’art. 6,
+            par. 1, lettera c) del GDPR.4.Natura del conferimento dei dati e
+            conseguenze del rifiutoIl conferimento dei datipersonali è
+            obbligatorio perprocedere alla registrazione sul portale e
+            perconseguire l’operatività sul medesimo ai fini della gestione
+            delle pratiche.Pertanto,ilrifiuto di conferimento,parziale o totale,
+            comporterà l’impossibilitàperl’interessato a svolgere le attività
+            disponibili sul portale.5.Modalità del trattamentoIl trattamento è
+            realizzato per mezzo delle operazioni o complesso di operazioni
+            indicate all’art. 4 comma 1 lett.a) Codice Privacy e art. 4 n. 2)
+            GDPR, ovvero, a titolo esemplificativo: raccolta, registrazione,
             organizzazione,strutturazione,conservazione, consultazione,
             elaborazione,adattamento omodificazione, selezione,
             estrazione,raffronto, utilizzo, interconnessione, blocco,
             comunicazione mediante
             trasmissione,diffusione,limitazione,cancellazione e distruzione dei
-            dati. - Modulo per Utenti  -2I dati personali verrannotrattati
-            in forma cartacea, informatizzata e telematica ed inseriti nelle
+            dati. - Modulo per Utenti -2I dati personali verrannotrattati in
+            forma cartacea, informatizzata e telematica ed inseriti nelle
             pertinentibanche dati cui potranno accedere gli incaricati al
             trattamento dei dati.Il trattamento potrà anche essereeffettuato da
             terzi che forniscono specifici servizi elaborativi, amministrativi o
@@ -82,7 +81,7 @@ const TOS: React.FC<TOSProps> = () => {
             dati personali, e comunque in ossequio ai principi stabiliti
             dall’art. 5 paragrafo 1 del GDPR.6.Periodo di conservazione dei
             datiI dati forniti verrannotrattati econservati per tutta la durata
-            del rapportocon  e,comunque, al terminedello
+            del rapportocon e,comunque, al terminedello
             stesso,verrannocancellati oppurearchiviati per il tempo previsto
             dalla vigente normativa in materiaamministrativa, civilistica e
             processuale, contabile e fiscale; i dativerranno sottoposti a
@@ -100,9 +99,9 @@ const TOS: React.FC<TOSProps> = () => {
             esserecomunicatia soggettichefigurano qualiTitolariautonomi del
             trattamento oppureResponsabiliesternidel trattamento. Detti soggetti
             possono variamenteesserePubbliche Amministrazioni,Enti e Societàdel
-            sistema  e Bilateralità, Fondo Welfare Contrattuale,Fondo
-            Sostegno al Reddito,Fondo diSolidarietàBilateraleArtigianato,Fondo
-            Sviluppo Imprese,EntiPrevidenziali, Organizzazioni Sindacali, nonché
+            sistema e Bilateralità, Fondo Welfare Contrattuale,Fondo Sostegno al
+            Reddito,Fondo diSolidarietàBilateraleArtigianato,Fondo Sviluppo
+            Imprese,EntiPrevidenziali, Organizzazioni Sindacali, nonché
             amministrazioni finanziarie o istituti pubblici in adempimento
             diobblighi normativi e, in generale, a tutti quei soggetti pubblici
             e privati la cui facoltà di accedere ai dati siariconosciuta da
@@ -116,12 +115,12 @@ const TOS: React.FC<TOSProps> = () => {
             supportotecnico,informaticoe telematicoal Titolare; organismi di
             vigilanza.L’elenco aggiornato dei Responsabiliesternidel trattamento
             è disponibile inviando unarichiesta scritta alTitolare, tramite
-            postaraccomandataa/rall’indirizzo della sede legale di-Via De’
-            Preti n. 8- 40121Bologna,oppure tramitee-mail
-            all’indirizzo:privacy@.org8.Trasferimento di datiextra
-            UENell’ambito della gestione delle pratiche istituzionali non è
-            previsto alcun trasferimento dei dati verso Paesi terziextra UE, né
-            verso organizzazioni internazionali.Ove si rendesse necessario per
+            postaraccomandataa/rall’indirizzo della sede legale di-Via De’ Preti
+            n. 8- 40121Bologna,oppure tramitee-mail
+            all’indirizzo:privacy@.org8.Trasferimento di datiextra UENell’ambito
+            della gestione delle pratiche istituzionali non è previsto alcun
+            trasferimento dei dati verso Paesi terziextra UE, né verso
+            organizzazioni internazionali.Ove si rendesse necessario per
             l'adempimento delle finalità dicui al punto3, il Titolare assicura
             sin d’ora che il trasferimento dei dati extra UE avverrà in
             conformità alledisposizioninormative applicabili.9.Diritti di cui
@@ -133,15 +132,15 @@ const TOS: React.FC<TOSProps> = () => {
             quantocompatibili,che potrà far valere in qualsiasi momento
             rivolgendo apposita richiesta scritta al Titolare deltrattamento
             (con modulo scaricabile direttamente dal sito del Garante),tramite
-            raccomandata a/r presso lasedelegale di-Via De’ Preti n. 8-
-            40121 Bologna,oppuretramite e-mail all’indirizzoprivacy@.orgoPEC
+            raccomandata a/r presso lasedelegale di-Via De’ Preti n. 8- 40121
+            Bologna,oppuretramite e-mail all’indirizzoprivacy@.orgoPEC
             all’indirizzo@pec..orgL’esercizio dei diritti da parte
             dell’interessato è gratuito ai sensi dell’art. 12 GDPR; tuttavia,
             nel caso di richiestemanifestamente infondate o eccessive, anche per
             la loro ripetitività, il Titolare potrebbe addebitareall’interessato
             un contributo spese ragionevole, alla luce dei costi amministrativi
             sostenuti per gestire larichiesta, o negare il soddisfacimento della
-            richiesta stessa. - Modulo per Utenti  -3Art. 7- Diritto di
+            richiesta stessa. - Modulo per Utenti -3Art. 7- Diritto di
             revocaL’interessato ha diritto di revocare il proprio consenso in
             qualsiasi momento. La revoca del consenso nonpregiudica la liceità
             del trattamento basata sul consenso prima della revoca.Art.
@@ -199,8 +198,8 @@ const TOS: React.FC<TOSProps> = () => {
             informativa può subire variazioni nel corso del tempo, che potranno
             anche essere oggetto dicomunicazione via mail, ove ritenuto
             opportuno.In ogni caso,si consigliadi controllarla regolarmentesul
-            sitowww..orge/o dal link nel portale   e di riferirsi alla
-            versione più aggiornata.ULTIMO AGGIORNAMENTO:25 LUGLIO 2019
+            sitowww..orge/o dal link nel portale e di riferirsi alla versione
+            più aggiornata.ULTIMO AGGIORNAMENTO:25 LUGLIO 2019
           </Paragraph>
         </Card.Content>
       </Card>

@@ -5,7 +5,7 @@ interface UserProviderProps {}
 
 export const UserContext = createContext<any>(null);
 
-export const UserProvider: React.FC<UserProviderProps> = ({children}) => {
+export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [actualUser, setActualUser] = useState<any>(null);
 
   useEffect(() => {
@@ -13,9 +13,9 @@ export const UserProvider: React.FC<UserProviderProps> = ({children}) => {
       setActualUser(user);
     });
   });
-  return(
-      <UserContext.Provider value={{actualUser}}>
-          {children}
-      </UserContext.Provider>
-  )
+  return (
+    <UserContext.Provider value={{ actualUser }}>
+      {children}
+    </UserContext.Provider>
+  );
 };

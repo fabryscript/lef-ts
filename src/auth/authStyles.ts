@@ -3,7 +3,7 @@ export const styles = StyleSheet.create({
   containerGeneric: {
     backgroundColor: "#FFF",
     flex: 1,
-    flexDirection: "column"
+    flexDirection: "column",
   },
   paddingTenAll: {
     padding: "10% 10% 10% 10%",
@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     height: "20%",
     padding: "4%",
     borderWidth: 0.25,
-    borderRadius: 25
+    borderRadius: 25,
   },
   sumbitTouchableOpacity: {
     width: "80%",
@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
     marginTop: "10%",
     marginLeft: "10%",
     backgroundColor: "#FAFAFAFA",
-    borderWidth: 0.25
+    borderWidth: 0.25,
   },
   forgotPassword: {
     opacity: 0.5,
@@ -41,13 +41,13 @@ export const styles = StyleSheet.create({
   },
   fgPassContainer: {
     marginTop: "5%",
-    padding: "4% 4% 4% 4%"
+    padding: "4% 4% 4% 4%",
   },
   fgPassInput: {
     marginTop: "3%",
     backgroundColor: "#FAFAFAFA",
     height: "30%",
     padding: "4%",
-    borderRadius: 25
-  }
+    borderRadius: 25,
+  },
 });
