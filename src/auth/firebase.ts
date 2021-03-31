@@ -11,6 +11,7 @@ import {
   REACT_APP_FIREBASE_PROJECT_ID,
   REACT_APP_FIREBASE_STORAGE_BUCKET,
 } from "@env";
+import Toast from "react-native-toast-message";
 
 const firebaseConfig = {
   apiKey: REACT_APP_FIREBASE_API_KEY,
@@ -29,36 +30,44 @@ if (!firebase.apps.length) {
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
-export const executeRegistration = async (email: string, password: string) => {
-  try {
-    return new Promise<boolean | string>((resolve, reject) => {
-      auth
-        .createUserWithEmailAndPassword(email, password)
-        .then((user) => {
-          user.user?.sendEmailVerification().then(() => {
-            resolve(true);
-            if (user.additionalUserInfo?.isNewUser) resolve("Nuovo utente");
+export const executeRegistration = async (email: string, password: string): Promise<string> => {
+  return new Promise<string>(async (resolve, reject) => {
+    try {
+      await auth.createUserWithEmailAndPassword(email, password)
+        .then((userCrediential) => {
+          resolve(userCrediential.user?.email!);
+          Toast.show({
+            type: "success",
+            text1: "Fatto! Account creato con successo!",
+            text2: "Controlla l'email di verifica!",
+            autoHide: true
           });
         })
-        .catch((_error) => {
-          const error = JSON.stringify(_error);
-          if (error.includes("email"))
-            reject("Email già in uso in un altro account");
-          else if (error.includes("password"))
-            reject("La password deve contenere almeno 6 caratteri");
-        });
-    });
-  } catch (error) {
-    // console.log(error);
-  }
+        .catch((error) => {
+          console.log(error.code);
+          if(error.code === "auth/email-already-in-use") {
+            Toast.show({
+              type: "error",
+              text1: "Questa email è già in uso",
+              text2: "Account non creato.",
+              autoHide: true
+            });
+            return;
+          }
+          reject(error);
+        })
+    } catch (error) {
+      reject(error);
+    }
+  })
 };
 
 export let timestamp = firebase.firestore.FieldValue.serverTimestamp();
 
 interface OrderPlate {
-  name: string,
-  price: number,
-  quantity?: string,
+  name: string;
+  price: number;
+  quantity?: string;
 }
 
 interface Order {
@@ -85,4 +94,57 @@ export const addOrder = async (order: Order) => {
       reject(false);
     }
   });
+};
+
+export const logIn = async (email: string, password: string) => {
+  if (email.trim() === "" || password.trim() === "") {
+    Toast.show({
+      type: "error",
+      text1: "I campi non possono essere vuoti",
+    });
+    return;
+  }
+  await auth.signInWithEmailAndPassword(email!, password!).catch((_error) => {
+    Toast.show({
+      type: "error",
+      position: "top",
+      text1: "Non abbiamo trovato un account!",
+      text2: "Ti spiace riprovare?",
+    });
+  });
+};
+
+export const passwordReset = async (email: string) => {
+  if (email.trim() === "") {
+    Toast.show({
+      type: "error",
+      text1: "Il campo non può essere vuoto! ❌",
+    });
+  }
+  await auth
+    .sendPasswordResetEmail(email)
+    .then(() => {
+      Toast.show({
+        type: "success",
+        text1: "Email inviata con successo! ✅",
+        text2: "...controlla anche lo spam!",
+        autoHide: true
+      });
+    })
+    .catch((error) => {
+      if (error.code === "auth/invalid-email") {
+        Toast.show({
+          type: "error",
+          text1: "L'email non è in formato corretto! 💢",
+          autoHide: true
+        });
+      } else if (error.code === "auth/user-not-found") {
+        Toast.show({
+          type: "error",
+          text1: "Utente non trovato!",
+          text2: "(╯°□°）╯︵ ┻━┻",
+          autoHide: true
+        });
+      }
+    });
 };

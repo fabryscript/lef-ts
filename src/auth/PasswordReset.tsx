@@ -1,59 +1,34 @@
 import React, { useState } from "react";
-import { Alert, View } from "react-native";
-import { Button, Card, TextInput } from "react-native-paper";
-import { auth } from "./firebase";
+import { View, TextInput, TouchableOpacity, Text } from "react-native";
+import { styles } from "./authStyles";
+import { passwordReset } from "./firebase";
 
 interface PasswordResetProps {}
 
 const PasswordReset: React.FC<PasswordResetProps> = ({}) => {
-  const [resetEmailText, setResetEmailText] = useState<string | any>();
+  const [resetEmailText, setResetEmailText] = useState<string>();
 
   const handlePasswordReset = async () => {
-    await auth
-      .sendPasswordResetEmail(resetEmailText)
-      .then(() => {
-        Alert.alert(
-          "Fatto!✅",
-          "I Nostri simpatici Robots hanno inviato la email di reset password con successo!",
-          [
-            {
-              text: "Yee! Che bello",
-            },
-          ],
-          { cancelable: true }
-        );
-      })
-      .catch((error) => {
-        const _error = JSON.stringify(error);
-        if (_error.includes("There is no user")) {
-          Alert.alert(
-            "Non ci voleva!❌",
-            "I Nostri amici Robots non hanno trovato una email che corrisponda alla vostra password",
-            [
-              {
-                text: "Capito!",
-              },
-            ],
-            { cancelable: true }
-          );
-        }
-      });
+    await passwordReset(resetEmailText!).then(() => {
+      setResetEmailText("");
+    });
   };
 
   return (
-    <View>
-      <Card>
-        <Card.Content>
-          <TextInput
-            label="E-Mail usata durante la registrazione"
-            value={resetEmailText}
-            onChangeText={(text) => setResetEmailText(text)}
-          />
-          <Button mode="contained" onPress={handlePasswordReset}>
-            Invia
-          </Button>
-        </Card.Content>
-      </Card>
+    <View style={styles.containerGeneric}>
+      <View style={styles.fgPassContainer}>
+        <TextInput
+          value={resetEmailText}
+          placeholder={`✉ E-Mail usata durante la registrazione`}
+          keyboardType="email-address"
+          autoCorrect={false}
+          onChangeText={(text) => setResetEmailText(text)}
+          style={styles.fgPassInput}
+        />
+        <TouchableOpacity style={styles.sumbitTouchableOpacity} onPress={handlePasswordReset}>
+          <Text>Invia</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

@@ -1,110 +1,74 @@
 import React, { useState } from "react";
-import { Alert, View } from "react-native";
-import { Banner, Button, Card, TextInput } from "react-native-paper";
+import { ScrollView, View, TextInput, TouchableOpacity, Text } from "react-native";
+import { Title } from "react-native-paper";
+import Toast from "react-native-toast-message";
 import { AuthNavProps } from "../paramlists/AuthParamList";
+import { styles } from "./authStyles";
 import { executeRegistration } from "./firebase";
 import { validateEmail, validatePassword } from "./validation";
 
-function Register({ navigation }: AuthNavProps<"Register">) {
-  const [emailText, setEmailText] = useState<string | any>();
-  const [passwordText, setPasswordText] = useState<string | any>();
-  const [emailNotValidBannerVisible, setEmailNotValidBannerVisible] = useState<
-    boolean | any
-  >(false);
-  const [
-    passwordNotEmptyOrLengthLessThanFiveVisible,
-    setPasswordNotEmptyOrLengthLessThanFiveVisible,
-  ] = useState<boolean | any>(false);
+function Register({ navigation }: AuthNavProps<"Registrazione">) {
+  const [emailText, setEmailText] = useState<string>();
+  const [passwordText, setPasswordText] = useState<string>();
 
   const handleRegister = async () => {
-    const resultOfEmailValidation = validateEmail(emailText);
-    const resultOfPasswordValidation = validatePassword(passwordText);
+    const resultOfEmailValidation = validateEmail(emailText!.trim());
+    const resultOfPasswordValidation = validatePassword(passwordText!.trim());
     if (resultOfEmailValidation) {
       if (resultOfPasswordValidation) {
-        await executeRegistration(emailText, passwordText)
-          .then((message) => {
-            Alert.alert(
-              "Quasi Fatto!",
-              "Perfetto💪, Assicurati di verificare l'email di verifica che ti abbiamo appena mandato!",
-              [
-                {
-                  text: "Okay! Ricevuto👍",
-                },
-              ],
-              { cancelable: true }
-            );
-            if (message?.toString().includes("Nuovo"))
-              navigation.navigate("InsertProcess");
-          })
-          .catch((error) => {
-            Alert.alert(
-              "Errore!",
-              error,
-              [
-                {
-                  text: "Capito.",
-                },
-              ],
-              { cancelable: true }
-            );
-          });
-      } else setPasswordNotEmptyOrLengthLessThanFiveVisible(true);
+        await executeRegistration(emailText!, passwordText!)
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Password del formato sbagliato",
+          text2: "Deve essere maggiore di sei caratteri!",
+          autoHide: true
+        });
+      }
     } else {
-      setEmailNotValidBannerVisible(true);
-    }
+      Toast.show({
+        type: "error",
+        text1: "L'email non è del formato corretto!",
+        text2: "Esempio: bob@letsfitja.com",
+        autoHide: true
+      });
+    };
+    setEmailText("");
+    setPasswordText("");
   };
 
   return (
-    <View>
-      <Banner
-        visible={emailNotValidBannerVisible}
-        actions={[
-          {
-            label: "Va bene, ci riprovo!",
-            onPress: () => setEmailNotValidBannerVisible(false),
-          },
-        ]}
-        icon="cancel"
-      >
-        Oops! Assicurati di aver inserito una email valida!
-      </Banner>
-      <Banner
-        visible={passwordNotEmptyOrLengthLessThanFiveVisible}
-        actions={[
-          {
-            label: "Va bene, ci riprovo!",
-            onPress: () =>
-              setPasswordNotEmptyOrLengthLessThanFiveVisible(false),
-          },
-        ]}
-        icon="cancel"
-      >
-        Ahh! La Password non deve essere vuota o contenente meno di 5 caratteri!
-      </Banner>
-      <Card>
-        <Card.Content>
+    <ScrollView style={styles.containerGeneric}>
+      <View style={styles.paddingTenAll}>
+        <Title style={styles.headingGen}>
+          Salve! Questa è la registrazione!
+        </Title>
+        <View style={styles.mtSixteen}>
           <TextInput
-            label="Email"
             value={emailText}
+            placeholder={`✉ E-Mail`}
+            keyboardType="email-address"
+            autoCorrect={false}
             onChangeText={(text) => setEmailText(text)}
+            style={styles.fgPassInput}
           />
           <TextInput
-            label="Password"
             secureTextEntry
-            placeholder="Almeno 6 caratteri!"
+            placeholder={`🔑 Password`}
+            keyboardType="visible-password"
             value={passwordText}
             onChangeText={(text) => setPasswordText(text)}
+            style={styles.fgPassInput}
           />
-          <Button
-            icon="arrow-collapse-right"
-            mode="outlined"
+          <TouchableOpacity
+            style={styles.sumbitTouchableOpacity}
             onPress={handleRegister}
           >
-            Registrati
-          </Button>
-        </Card.Content>
-      </Card>
-    </View>
+            <Text>Registriamoci!</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 
